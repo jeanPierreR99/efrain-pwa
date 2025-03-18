@@ -13,7 +13,8 @@ const ViewCharts: React.FC<ViewChartsProps> = ({ title, color }) => {
             <CardHeader>
                 <CardTitle>{title}</CardTitle>
                 <CardDescription>
-                    Mostrando Cambios en tiempo real
+                    <div> Mostrando cambios en tiempo real</div>
+                    <div className='float-right'> Últimas 5 horas</div>
                 </CardDescription>
             </CardHeader>
             <CardContent className='grid md:grid-cols-2 gap-4'>

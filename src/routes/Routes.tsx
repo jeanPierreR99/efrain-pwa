@@ -20,6 +20,10 @@ export const routes: RouteObject[] = [
         errorElement: <div>Oops! Something went wrong.</div>,
         children: [
             {
+                index: true,
+                element: withSuspense(<Home />),
+            },
+            {
                 path: "map",
                 element: withSuspense(<Home />),
             },
