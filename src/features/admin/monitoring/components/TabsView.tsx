@@ -2,13 +2,14 @@ import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/ui/tabs";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/shared/ui/select";
 import ViewCharts from "./ViewCharts";
+import { colorConfig } from "../../home/components/ViewMonitoringMap";
 
 const tabsPath = [
-    { label: "Temperatura", value: "temperature", content: <ViewCharts title="Datos de Temperatura" color={"#d6d827"} /> },
-    { label: "Humedad", value: "humidity", content: <ViewCharts title="Datos de Humedad" color={"#1fc059"} /> },
-    { label: "PM2", value: "pm2", content: <ViewCharts title="Datos de PM2" color={"#1f43c0"} /> },
-    { label: "PM2.5", value: "pm2.5", content: <ViewCharts title="Datos de PM2.5" color={"#db2e2e"} /> },
-    { label: "PM10", value: "pm10", content: <ViewCharts title="Datos de PM10" color={"#d6d827"} /> }
+    { label: "Temperatura", value: "temperature", content: <ViewCharts title="Temperatura" color={colorConfig[0].color} /> },
+    { label: "Humedad", value: "humidity", content: <ViewCharts title="Humedad" color={colorConfig[1].color} /> },
+    { label: "PM2", value: "pm2", content: <ViewCharts title="PM2" color={colorConfig[2].color} /> },
+    { label: "PM2.5", value: "pm2.5", content: <ViewCharts title="PM2.5" color={colorConfig[3].color} /> },
+    { label: "PM10", value: "pm10", content: <ViewCharts title="PM10" color={colorConfig[4].color} /> }
 ];
 
 export function TabsView() {
@@ -19,7 +20,7 @@ export function TabsView() {
             {/* Dropdown en móviles con ShadCN */}
             <div className="md:hidden mb-2">
                 <Select onValueChange={setSelectedTab} value={selectedTab}>
-                    <SelectTrigger className="w-full">
+                    <SelectTrigger className="w-full bg-white">
                         <SelectValue placeholder="Selecciona una opción" />
                     </SelectTrigger>
                     <SelectContent>

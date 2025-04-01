@@ -10,6 +10,7 @@ interface Marker {
 interface MarkerStore {
     markers: Marker[];
     addMarker: (marker: Marker) => void;
+    removeMarker: (index: number) => void;
 }
 
 export const useMarkerStore = create<MarkerStore>((set) => ({
@@ -34,4 +35,7 @@ export const useMarkerStore = create<MarkerStore>((set) => ({
         },
     ],
     addMarker: (marker) => set((state) => ({ markers: [...state.markers, marker] })),
+    removeMarker: (index) => set((state) => ({
+        markers: state.markers.filter((_, i) => i !== index)
+    }))
 }));

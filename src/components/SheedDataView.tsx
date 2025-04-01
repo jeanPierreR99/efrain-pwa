@@ -7,6 +7,7 @@ import {
     SheetHeader,
     SheetTitle,
 } from "@/shared/ui/sheet"
+import { LocateFixedIcon } from "lucide-react"
 import React from "react"
 
 interface SheetDataViewProps {
@@ -22,7 +23,7 @@ const SheetDataView: React.FC<SheetDataViewProps> = ({ edit, title, description,
         <Sheet open={open} onOpenChange={setOpen}>
             <SheetContent side="left" className="z-[1000] pb-10 bg-white shadow-lg overflow-y-auto">
                 <SheetHeader>
-                    <SheetTitle>{title}</SheetTitle>
+                    <SheetTitle className="flex gap-2"> <LocateFixedIcon></LocateFixedIcon>{title}</SheetTitle>
                     <SheetDescription>
                         {description}
                     </SheetDescription>

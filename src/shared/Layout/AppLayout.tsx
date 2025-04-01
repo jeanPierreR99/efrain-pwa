@@ -4,7 +4,7 @@ import { Toaster } from '../ui/sonner';
 
 const AppLayout = () => {
     return (
-        <div>
+        <div className='bg-gray-50'>
             <Header></Header>
             <Outlet />
             <Toaster></Toaster>

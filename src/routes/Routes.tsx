@@ -5,7 +5,8 @@ import AppLayout from "@/shared/Layout/AppLayout";
 import Home from "@/features/admin/home/Home";
 import NewPoint from "@/features/admin/new-point/NewPoint";
 import Login from "@/features/auth/Login/Login";
-import Review from "@/features/admin/review/Review";
+import Monitoring from "@/features/admin/monitoring/Monitoring";
+import Compare from "@/features/admin/compare/Compare";
 
 const LoadingFallback = () => <div className="absolute left-0 w-full h-full bg-gray-100/70 z-10 flex justify-center items-center"><Loader2 className="animate-spin text-blue-500" /></div>;
 
@@ -32,8 +33,12 @@ export const routes: RouteObject[] = [
                 element: withSuspense(<NewPoint />),
             },
             {
-                path: "review",
-                element: withSuspense(<Review />),
+                path: "monitoring",
+                element: withSuspense(<Monitoring />),
+            },
+            {
+                path: "compare",
+                element: withSuspense(<Compare />),
             }
         ],
     },

@@ -7,13 +7,21 @@ import {
   CardContent,
 } from "@/shared/ui/card"
 import {
+  ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/shared/ui/chart"
 
 
-export function Chart({chartConfig, chartData}:any) {
+export function Chart({ colorConfig, chartData }: any) {
+  const chartConfig = {
+    value: {
+      label: colorConfig.sensor,
+      color: colorConfig.color,
+    },
+  } satisfies ChartConfig
+
   return (
     <Card className="shadow-none border-none">
       <CardContent className="h-[100px] px-0">
@@ -30,7 +38,7 @@ export function Chart({chartConfig, chartData}:any) {
               cursor={true}
               content={<ChartTooltipContent hideLabel />}
             />
-            <Bar dataKey="humedad" fill="var(--color-humedad)" radius={8} />
+            <Bar dataKey="value" fill={colorConfig.color} radius={8} />
           </BarChart>
         </ChartContainer>
       </CardContent>

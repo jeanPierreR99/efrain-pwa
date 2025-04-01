@@ -35,7 +35,7 @@ export function RadialChart2({ color }: RadialChart2Props) {
 
 
   return (
-    <Card className="flex flex-col shadow-none">
+    <Card className="flex flex-col border-none shadow-md">
       <CardContent className="flex-1 pb-0">
         <ChartContainer
           config={chartConfig}

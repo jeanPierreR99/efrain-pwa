@@ -11,9 +11,17 @@ import {
   Card,
   CardContent,
 } from "@/shared/ui/card"
-import {  ChartContainer } from "@/shared/ui/chart"
+import { ChartConfig, ChartContainer } from "@/shared/ui/chart"
 
-export function RadialChartView({ chartConfig, chartData, name }: any) {
+export function RadialChartView({ colorConfig, chartData }: any) {
+
+  const chartConfig = {
+    value: {
+      label: colorConfig.sensor,
+      color: colorConfig.color,
+    },
+  } satisfies ChartConfig
+
   return (
     <Card className="shadow-none border-none flex items-center justify-center">
       <CardContent className="h-[100px] px-0">
@@ -58,7 +66,7 @@ export function RadialChartView({ chartConfig, chartData, name }: any) {
                           y={(viewBox.cy || 0) + 24}
                           className="fill-muted-foreground"
                         >
-                          {name}
+                          {colorConfig.sensor}
                         </tspan>
                       </text>
                     )

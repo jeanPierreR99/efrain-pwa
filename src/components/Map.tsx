@@ -5,6 +5,7 @@ import SheetDataView from "./SheedDataView";
 import { useMarkerStore } from "@/store/UseMarkerStore";
 import MARKER_RED from "@/assets/images/marker-red.png";
 import L from "leaflet";
+import { ListPoint } from "@/features/admin/new-point/components/ListPoint";
 interface MapProps {
     edit: boolean;
     title: string;
@@ -86,6 +87,7 @@ const Map: React.FC<MapProps> = ({ edit, title, description }) => {
                 ))}
             </MapContainer>
 
+            {edit && <div className="absolute left-4 bottom-4"><ListPoint></ListPoint></div>}
             <SheetDataView edit={edit} title={title} description={description} open={open} setOpen={setOpen} position={position} />
         </div>
     );

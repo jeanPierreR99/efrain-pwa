@@ -1,7 +1,6 @@
 import { Chart } from '@/components/chart/Chart';
 import { RadialChartView } from '@/components/chart/RadialChartView';
 import { Card, CardDescription, CardTitle } from '@/shared/ui/card';
-import { ChartConfig } from '@/shared/ui/chart';
 import { ArrowBigUpIcon, Smile } from 'lucide-react';
 import React from 'react';
 
@@ -9,153 +8,110 @@ interface ViewMonitoringMapProps {
     position: [number, number] | null;
 }
 
+export const colorConfig: IColor[] = [
+    {
+        sensor: "temperatura",
+        color: "#d6d827"
+    },
+    {
+        sensor: "humedad",
+        color: "#1fc059"
+    },
+    {
+        sensor: "pm2",
+        color: "#1f43c0"
+    },
+    {
+        sensor: "pm2.5",
+        color: "#db2e2e"
+    },
+    {
+        sensor: "pm10",
+        color: "#8d3392"
+    },
+    {
+        sensor: "co2",
+        color: "#6694e3"
+    },
+]
+
 //dato1
 const chartData1 = [
-    { month: "January", humedad: 186 },
-    { month: "February", humedad: 305 },
-    { month: "March", humedad: 237 },
-    { month: "April", humedad: 73 },
-    { month: "May", humedad: 209 },
-    { month: "June", humedad: 214 },
-    { month: "July", humedad: 14 },
-    { month: "AUG", humedad: 102 },
-    { month: "Desc", humedad: 73 },
-    { month: "NOv", humedad: 200 },
+    { month: "January", value: 186 },
+    { month: "February", value: 305 },
+    { month: "March", value: 237 },
+    { month: "April", value: 73 },
+    { month: "May", value: 209 },
+    { month: "June", value: 214 },
+    { month: "July", value: 14 },
+    { month: "AUG", value: 102 },
+    { month: "Desc", value: 73 },
+    { month: "NOv", value: 200 },
 ]
-
-
-const chartConfig1 = {
-    humedad: {
-        label: "Humedad",
-        color: "#d6d827",
-    },
-} satisfies ChartConfig
-
 
 const chartDataRadial1 = [
-    { humedad: "safari", value: 45, fill: "var(--color-safari)" },
+    { humedad: "safari", value: 45, fill: colorConfig[0].color },
 ]
-
-const chartConfigRadial1 = {
-    value: {
-        label: "Value",
-    },
-    safari: {
-        label: "Safari",
-        color: "#d6d827",
-    },
-} satisfies ChartConfig
 
 //datao 2
 const chartData2 = [
-    { month: "January", humedad: 186 },
-    { month: "February", humedad: 305 },
-    { month: "March", humedad: 237 },
-    { month: "April", humedad: 73 },
-    { month: "May", humedad: 209 },
-    { month: "June", humedad: 214 },
-    { month: "July", humedad: 14 },
-    { month: "AUG", humedad: 102 },
-    { month: "Desc", humedad: 73 },
-    { month: "NOv", humedad: 200 },
+    { month: "January", value: 186 },
+    { month: "February", value: 305 },
+    { month: "March", value: 237 },
+    { month: "April", value: 73 },
+    { month: "May", value: 209 },
+    { month: "June", value: 214 },
+    { month: "July", value: 14 },
+    { month: "AUG", value: 102 },
+    { month: "Desc", value: 73 },
+    { month: "NOv", value: 200 },
 ]
-
-
-const chartConfig2 = {
-    humedad: {
-        label: "Humedad",
-        color: "#1fc059",
-    },
-} satisfies ChartConfig
-
 
 const chartDataRadial2 = [
-    { humedad: "safari", value: 52, fill: "var(--color-safari)" },
+    { humedad: "safari", value: 52, fill: colorConfig[1].color },
 ]
-
-const chartConfigRadial2 = {
-    value: {
-        label: "Value",
-    },
-    safari: {
-        label: "Safari",
-        color: "#1fc059",
-    },
-} satisfies ChartConfig
 
 //datao 3
 const chartData3 = [
-    { month: "January", humedad: 186 },
-    { month: "February", humedad: 305 },
-    { month: "March", humedad: 237 },
-    { month: "April", humedad: 73 },
-    { month: "May", humedad: 209 },
-    { month: "June", humedad: 214 },
-    { month: "July", humedad: 14 },
-    { month: "AUG", humedad: 102 },
-    { month: "Desc", humedad: 73 },
-    { month: "NOv", humedad: 200 },
+    { month: "January", value: 186 },
+    { month: "February", value: 305 },
+    { month: "March", value: 237 },
+    { month: "April", value: 73 },
+    { month: "May", value: 209 },
+    { month: "June", value: 214 },
+    { month: "July", value: 14 },
+    { month: "AUG", value: 102 },
+    { month: "Desc", value: 73 },
+    { month: "NOv", value: 200 },
 ]
-
-
-const chartConfig3 = {
-    humedad: {
-        label: "Humedad",
-        color: "#1f43c0",
-    },
-} satisfies ChartConfig
-
 
 const chartDataRadial3 = [
-    { humedad: "safari", value: 65, fill: "var(--color-safari)" },
+    { humedad: "safari", value: 65, fill: colorConfig[2].color },
 ]
-
-const chartConfigRadial3 = {
-    value: {
-        label: "Value",
-    },
-    safari: {
-        label: "Safari",
-        color: "#1f43c0",
-    },
-} satisfies ChartConfig
 
 //datao 4
 const chartData4 = [
-    { month: "January", humedad: 186 },
-    { month: "February", humedad: 305 },
-    { month: "March", humedad: 237 },
-    { month: "April", humedad: 73 },
-    { month: "May", humedad: 209 },
-    { month: "June", humedad: 214 },
-    { month: "July", humedad: 14 },
-    { month: "AUG", humedad: 102 },
-    { month: "Desc", humedad: 73 },
-    { month: "NOv", humedad: 200 },
+    { month: "January", value: 186 },
+    { month: "February", value: 305 },
+    { month: "March", value: 237 },
+    { month: "April", value: 73 },
+    { month: "May", value: 209 },
+    { month: "June", value: 214 },
+    { month: "July", value: 14 },
+    { month: "AUG", value: 102 },
+    { month: "Desc", value: 73 },
+    { month: "NOv", value: 200 },
 ]
-
-
-const chartConfig4 = {
-    humedad: {
-        label: "Humedad",
-        color: "#db2e2e",
-    },
-} satisfies ChartConfig
-
 
 const chartDataRadial4 = [
-    { humedad: "safari", value: 20, fill: "var(--color-safari)" },
+    { humedad: "safari", value: 20, fill: colorConfig[3].color },
 ]
 
-const chartConfigRadial4 = {
-    value: {
-        label: "Value",
-    },
-    safari: {
-        label: "Safari",
-        color: "#db2e2e",
-    },
-} satisfies ChartConfig
+interface IColor {
+    sensor: string;
+    color: string;
+}
+
 
 const ViewMonitoringMap: React.FC<ViewMonitoringMapProps> = ({ position }) => {
     console.log(position)
@@ -178,23 +134,23 @@ const ViewMonitoringMap: React.FC<ViewMonitoringMapProps> = ({ position }) => {
             <CardTitle>Otros</CardTitle>
 
             <div className='grid grid-cols-2 gap-2'>
-                <Chart chartConfig={chartConfig1} chartData={chartData1}></Chart>
-                <RadialChartView chartConfig={chartConfigRadial1} chartData={chartDataRadial1} name={"Temp"}></RadialChartView>
+                <Chart colorConfig={colorConfig[0]} chartData={chartData1}></Chart>
+                <RadialChartView colorConfig={colorConfig[0]} chartData={chartDataRadial1}></RadialChartView>
             </div>
 
             <div className='grid grid-cols-2 gap-2'>
-                <Chart chartConfig={chartConfig2} chartData={chartData2}></Chart>
-                <RadialChartView chartConfig={chartConfigRadial2} chartData={chartDataRadial2} name={"Humedad"}></RadialChartView>
+                <Chart colorConfig={colorConfig[1]} chartData={chartData2}></Chart>
+                <RadialChartView colorConfig={colorConfig[1]} chartData={chartDataRadial2}></RadialChartView>
             </div>
 
             <div className='grid grid-cols-2 gap-2'>
-                <Chart chartConfig={chartConfig3} chartData={chartData3}></Chart>
-                <RadialChartView chartConfig={chartConfigRadial3} chartData={chartDataRadial3} name={"PM.1.0"}></RadialChartView>
+                <Chart colorConfig={colorConfig[2]} chartData={chartData3}></Chart>
+                <RadialChartView colorConfig={colorConfig[2]} chartData={chartDataRadial3}></RadialChartView>
             </div>
 
             <div className='grid grid-cols-2 gap-2'>
-                <Chart chartConfig={chartConfig4} chartData={chartData4}></Chart>
-                <RadialChartView chartConfig={chartConfigRadial4} chartData={chartDataRadial4} name={"PM2.5"}></RadialChartView>
+                <Chart colorConfig={colorConfig[3]} chartData={chartData4}></Chart>
+                <RadialChartView colorConfig={colorConfig[3]} chartData={chartDataRadial4}></RadialChartView>
             </div>
 
         </div>

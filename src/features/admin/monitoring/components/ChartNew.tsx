@@ -52,7 +52,7 @@ export function ChartNew({ color }: ChartNewProps) {
 
 
   return (
-    <Card className="shadow-none">
+    <Card className="border-none shadow-md">
       <CardContent>
         <ChartContainer config={chartConfig}>
           <AreaChart

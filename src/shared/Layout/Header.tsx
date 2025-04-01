@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Menu, X } from "lucide-react"; // Iconos para el menú
-import LOGO from "../../assets/images/logo.png";
+import LOGO from "../../assets/images/logo.webp";
 import { DropDown } from "@/features/admin/home/components/DropDown";
 
 const links = [
     { path: "/map", label: "Mapa" },
     { path: "/new-point", label: "Nuevo Punto" },
-    { path: "/review", label: "Monitoreo" },
-    { path: "/reviews", label: "Comparaciones" },
+    { path: "/monitoring", label: "Monitoreo" },
+    { path: "/compare", label: "Comparaciones" },
     { path: "/export", label: "Exportar" }
 ];
 
@@ -16,11 +16,11 @@ const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <header className="border-b h-[70px] shadow-md bg-white">
-            <div className="px-6 md:px-10 flex justify-between items-center h-full">
+        <header className="border-b h-[70px] shadow-md bg-white px-4 md:px-0">
+            <div className="md:max-w-[1225px] md:mx-auto flex justify-between items-center h-full">
                 {/* Logo */}
-                <div className="h-[50px] w-[50px]">
-                    <img className="w-full h-full" src={LOGO} alt="logo.png" />
+                <div className="h-[50px] w-[150px]">
+                    <img className="w-full h-full object-cover" src={LOGO} alt="logo.png" />
                 </div>
 
                 {/* Menú de escritorio */}
