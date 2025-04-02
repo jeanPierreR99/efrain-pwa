@@ -45,9 +45,9 @@ const Map: React.FC<MapProps> = ({ edit, title, description }) => {
         <div className="relative">
             <button
                 onClick={() => setMapType(mapType === "satellite" ? "street" : "satellite")}
-                className="absolute top-4 right-4 z-10 bg-white px-4 py-2 rounded shadow-lg cursor-pointer"
+                className="absolute text-sm top-4 right-4 z-10 bg-white px-4 py-2 rounded shadow-lg cursor-pointer"
             >
-                {mapType === "satellite" ? "Mapa Plano 🗺️" : "Mapa Satelital 🌎"}
+                {mapType === "satellite" ? "Plano 🗺️" : "Satelital 🌎"}
             </button>
 
             <MapContainer zoomControl={false} center={[-12.589805, -69.173021]} zoom={9} maxZoom={17} className="h-[calc(100vh-70px)] w-full z-0">
@@ -87,7 +87,7 @@ const Map: React.FC<MapProps> = ({ edit, title, description }) => {
                 ))}
             </MapContainer>
 
-            {edit && <div className="absolute left-4 bottom-4"><ListPoint></ListPoint></div>}
+            {edit && <div className="absolute left-4 top-4"><ListPoint></ListPoint></div>}
             <SheetDataView edit={edit} title={title} description={description} open={open} setOpen={setOpen} position={position} />
         </div>
     );

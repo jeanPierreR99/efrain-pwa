@@ -7,6 +7,7 @@ import NewPoint from "@/features/admin/new-point/NewPoint";
 import Login from "@/features/auth/Login/Login";
 import Monitoring from "@/features/admin/monitoring/Monitoring";
 import Compare from "@/features/admin/compare/Compare";
+import Export from "@/features/admin/export/Export";
 
 const LoadingFallback = () => <div className="absolute left-0 w-full h-full bg-gray-100/70 z-10 flex justify-center items-center"><Loader2 className="animate-spin text-blue-500" /></div>;
 
@@ -39,6 +40,10 @@ export const routes: RouteObject[] = [
             {
                 path: "compare",
                 element: withSuspense(<Compare />),
+            },
+            {
+                path: "export",
+                element: withSuspense(<Export />)
             }
         ],
     },

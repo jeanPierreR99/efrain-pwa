@@ -1,9 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { format } from "date-fns"
 import { Calendar as CalendarIcon } from "lucide-react"
-
 import { cn } from "@/lib/utils"
 import { Button } from "@/shared/ui/button"
 import { Calendar } from "@/shared/ui/calendar"
@@ -16,7 +14,6 @@ import {
 interface PropFormDateCompare {
     date: any;
     setDate: any;
-
 }
 
 export const FormDateCompare: React.FC<PropFormDateCompare> = ({ date, setDate }) => {
@@ -32,7 +29,8 @@ export const FormDateCompare: React.FC<PropFormDateCompare> = ({ date, setDate }
                     )}
                 >
                     <CalendarIcon className="mr-2 h-4 w-4" />
-                    {date ? format(date, "PPP") : <span>Seleccione una fecha</span>}
+                    {date ? date.toLocaleDateString("es-ES", { year: 'numeric', month: 'short', day: 'numeric' })
+                        : <span>Seleccione una fecha</span>}
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0">

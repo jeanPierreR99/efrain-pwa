@@ -4,9 +4,8 @@ import { useState } from 'react';
 import { format } from 'date-fns';
 import { useMarkerStore } from '@/store/UseMarkerStore';
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/shared/ui/select';
-import { Loader2, TrendingUp } from 'lucide-react';
-import { ChartCompare } from './components/ChartCompare';
-import { CardHeader, CardTitle } from '@/shared/ui/card';
+import { Loader2 } from 'lucide-react';
+import ChartViewCompare from './components/ChartViewCompare';
 
 const chartData = [
     { month: "January", temperatura: 32, humedad: 40, pm2: 30, pm2_5: 50, pm10: 50, co2: 45 },
@@ -83,141 +82,13 @@ const Compare = () => {
                 </div>
                 {error && <span className='text-red-500 text-sm'>Seleccione ambas fechas</span>}
             </div>
-            <div className='mt-8'>
-                <CardHeader className='px-0'>
-                    <CardTitle>Humedad</CardTitle>
-                </CardHeader>
-                <div className='grid md:grid-cols-2 mt-6 gap-6'>
-                    <ChartCompare chartData={chartData} sensor="humedad"></ChartCompare>
-                    <ChartCompare chartData={chartData} sensor="humedad"></ChartCompare>
-                </div>
-                <div className="grid grid-cols-2 w-full gap-6 text-sm mt-6">
-                    <div className="flex flex-col gap-2">
-                        <div className="flex items-center gap-2 font-medium leading-none">
-                            Promedio: 30.4 <TrendingUp className="h-4 w-4" />
-                        </div>
-                    </div>
-                    <div className="flex flex-col gap-2">
-                        <div className="flex items-center gap-2 font-medium leading-none">
-                            Promedio: 30.4 <TrendingUp className="h-4 w-4" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className='mt-8'>
-                <CardHeader className='px-0'>
-                    <CardTitle>Temperatura</CardTitle>
-                </CardHeader>
-                <div className='grid md:grid-cols-2 mt-6 gap-6'>
-                    <ChartCompare chartData={chartData} sensor="temperatura"></ChartCompare>
-                    <ChartCompare chartData={chartData} sensor="temperatura"></ChartCompare>
-                </div>
-                <div className="grid grid-cols-2 w-full gap-6 text-sm mt-6">
-                    <div className="flex flex-col gap-2">
-                        <div className="flex items-center gap-2 font-medium leading-none">
-                            Promedio: 30.4 <TrendingUp className="h-4 w-4" />
-                        </div>
-                    </div>
-                    <div className="flex flex-col gap-2">
-                        <div className="flex items-center gap-2 font-medium leading-none">
-                            Promedio: 30.4 <TrendingUp className="h-4 w-4" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div className='mt-8'>
-                <CardHeader className='px-0'>
-                    <CardTitle>PM2</CardTitle>
-                </CardHeader>
-                <div className='grid md:grid-cols-2 mt-6 gap-6'>
-                    <ChartCompare chartData={chartData} sensor="pm2"></ChartCompare>
-                    <ChartCompare chartData={chartData} sensor="pm2"></ChartCompare>
-                </div>
-                <div className="grid grid-cols-2 w-full gap-6 text-sm mt-6">
-                    <div className="flex flex-col gap-2">
-                        <div className="flex items-center gap-2 font-medium leading-none">
-                            Promedio: 30.4 <TrendingUp className="h-4 w-4" />
-                        </div>
-
-                    </div>
-                    <div className="flex flex-col gap-2">
-                        <div className="flex items-center gap-2 font-medium leading-none">
-                            Promedio: 30.4 <TrendingUp className="h-4 w-4" />
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            <div className='mt-8'>
-                <CardHeader className='px-0'>
-                    <CardTitle>PM2.5</CardTitle>
-                </CardHeader>
-                <div className='grid md:grid-cols-2 mt-6 gap-6'>
-                    <ChartCompare chartData={chartData} sensor="pm2_5"></ChartCompare>
-                    <ChartCompare chartData={chartData} sensor="pm2_5"></ChartCompare>
-                </div>
-                <div className="grid grid-cols-2 w-full gap-6 text-sm mt-6">
-                    <div className="flex flex-col gap-2">
-                        <div className="flex items-center gap-2 font-medium leading-none">
-                            Promedio: 30.4 <TrendingUp className="h-4 w-4" />
-                        </div>
-
-                    </div>
-                    <div className="flex flex-col gap-2">
-                        <div className="flex items-center gap-2 font-medium leading-none">
-                            Promedio: 30.4 <TrendingUp className="h-4 w-4" />
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <div className='mt-8'>
-                <CardHeader className='px-0'>
-                    <CardTitle>PM10</CardTitle>
-                </CardHeader>
-                <div className='grid md:grid-cols-2 mt-6 gap-6'>
-                    <ChartCompare chartData={chartData} sensor="pm10"></ChartCompare>
-                    <ChartCompare chartData={chartData} sensor="pm10"></ChartCompare>
-                </div>
-                <div className="grid grid-cols-2 w-full gap-6 text-sm mt-6">
-                    <div className="flex flex-col gap-2">
-                        <div className="flex items-center gap-2 font-medium leading-none">
-                            Promedio: 30.4 <TrendingUp className="h-4 w-4" />
-                        </div>
-
-                    </div>
-                    <div className="flex flex-col gap-2">
-                        <div className="flex items-center gap-2 font-medium leading-none">
-                            Promedio: 30.4 <TrendingUp className="h-4 w-4" />
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <div className='mt-8'>
-                <CardHeader className='px-0'>
-                    <CardTitle>CO2</CardTitle>
-                </CardHeader>
-                <div className='grid md:grid-cols-2 mt-6 gap-6'>
-                    <ChartCompare chartData={chartData} sensor="co2"></ChartCompare>
-                    <ChartCompare chartData={chartData} sensor="co2"></ChartCompare>
-                </div>
-                <div className="grid grid-cols-2 w-full gap-6 text-sm mt-6">
-                    <div className="flex flex-col gap-2">
-                        <div className="flex items-center gap-2 font-medium leading-none">
-                            Promedio: 30.4 <TrendingUp className="h-4 w-4" />
-                        </div>
-
-                    </div>
-                    <div className="flex flex-col gap-2">
-                        <div className="flex items-center gap-2 font-medium leading-none">
-                            Promedio: 30.4 <TrendingUp className="h-4 w-4" />
-                        </div>
-
-                    </div>
-                </div>
+            <div className='flex flex-col gap-8 mt-8'>
+                <ChartViewCompare title='Humedad' chartData={chartData} averageOne={20} averageTwo={10} sensor='humedad'></ChartViewCompare>
+                <ChartViewCompare title='Temperatura' chartData={chartData} averageOne={20} averageTwo={10} sensor='temperatura'></ChartViewCompare>
+                <ChartViewCompare title='PM2' chartData={chartData} averageOne={20} averageTwo={10} sensor='pm2'></ChartViewCompare>
+                <ChartViewCompare title='PM2.5' chartData={chartData} averageOne={20} averageTwo={10} sensor='pm2_5'></ChartViewCompare>
+                <ChartViewCompare title='PM10' chartData={chartData} averageOne={20} averageTwo={10} sensor='pm10'></ChartViewCompare>
+                <ChartViewCompare title='CO2' chartData={chartData} averageOne={20} averageTwo={10} sensor='co2'></ChartViewCompare>
             </div>
         </div>
     );
