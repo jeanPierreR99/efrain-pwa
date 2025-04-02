@@ -79,7 +79,7 @@ const Compare = () => {
                 <div className='flex flex-col md:flex-row gap-4 mt-4'>
                     <FormDateCompare date={dateFirst} setDate={setDateFirst} />
                     <FormDateCompare date={dateSecond} setDate={setDateSecond} />
-                    <Button onClick={handleClick}>{load && <Loader2 className='animate-spin' />}Comparar</Button>
+                    <Button className='w-fit' onClick={handleClick}>{load && <Loader2 className='animate-spin' />}Comparar</Button>
                 </div>
                 {error && <span className='text-red-500 text-sm'>Seleccione ambas fechas</span>}
             </div>
