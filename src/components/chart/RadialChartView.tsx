@@ -14,23 +14,23 @@ import {
 import { ChartConfig, ChartContainer } from "@/shared/ui/chart"
 
 export function RadialChartView({ colorConfig, chartData }: any) {
-
+  const data = [{ ...chartData, fill: colorConfig.color }];
   const chartConfig = {
-    value: {
+    temperature: {
       label: colorConfig.sensor,
       color: colorConfig.color,
     },
   } satisfies ChartConfig
 
   return (
-    <Card className="shadow-none border-none flex items-center justify-center">
+    <Card className="shadow-none border-none flex items-center justify-center py-2">
       <CardContent className="h-[100px] px-0">
         <ChartContainer
           config={chartConfig}
           className="mx-auto aspect-square h-[100px] w-[100px]"
         >
           <RadialBarChart
-            data={chartData}
+            data={data}
             endAngle={1000}
             innerRadius={55}
             outerRadius={35}
@@ -42,7 +42,7 @@ export function RadialChartView({ colorConfig, chartData }: any) {
               className="first:fill-muted last:fill-background"
               polarRadius={[86, 74]}
             />
-            <RadialBar dataKey="value" background />
+            <RadialBar dataKey="temperature" background />
             <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
               <Label
                 content={({ viewBox }) => {
@@ -57,9 +57,9 @@ export function RadialChartView({ colorConfig, chartData }: any) {
                         <tspan
                           x={viewBox.cx}
                           y={viewBox.cy}
-                          className="fill-foreground text-3xl font-bold"
+                          className="fill-foreground text-lg font-bold"
                         >
-                          {chartData[0].value.toLocaleString()} %
+                          {data[0][colorConfig.dataKey] + " " + colorConfig.medida}
                         </tspan>
                         <tspan
                           x={viewBox.cx}
