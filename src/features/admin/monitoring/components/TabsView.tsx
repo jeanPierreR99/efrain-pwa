@@ -5,11 +5,61 @@ import ViewCharts from "./ViewCharts";
 import { colorConfig } from "../../home/components/ViewMonitoringMap";
 
 const tabsPath = [
-    { label: "Temperatura", value: "temperature", content: <ViewCharts title="Temperatura" color={colorConfig[0].color} /> },
-    { label: "Humedad", value: "humidity", content: <ViewCharts title="Humedad" color={colorConfig[1].color} /> },
-    { label: "PM2", value: "pm2", content: <ViewCharts title="PM2" color={colorConfig[2].color} /> },
-    { label: "PM2.5", value: "pm2.5", content: <ViewCharts title="PM2.5" color={colorConfig[3].color} /> },
-    { label: "PM10", value: "pm10", content: <ViewCharts title="PM10" color={colorConfig[4].color} /> }
+    {
+        label: "Temperatura", value: "temperature", content: <ViewCharts
+            title="Temperatura"
+            color={colorConfig[0].color}
+            dataKey={colorConfig[0].dataKey}
+            lastWeekValue={10}
+            yesterdayValue={30}
+            thresholds={[22, 28, 35]}
+            categories={["Buena", "Moderada", "Pobre", "Peligrosa"]}
+            unit="°C" />
+    },
+    {
+        label: "Humedad", value: "humidity", content: <ViewCharts
+            title="Humedad"
+            color={colorConfig[1].color}
+            dataKey={colorConfig[1].dataKey}
+            lastWeekValue={10}
+            yesterdayValue={90}
+            thresholds={[30, 60, 85]}
+            categories={["Buena", "Moderada", "Pobre", "Peligrosa"]}
+            unit="%" />
+    },
+    {
+        label: "PM2", value: "pm2", content: <ViewCharts
+            title="PM2"
+            color={colorConfig[2].color}
+            dataKey={colorConfig[2].dataKey}
+            lastWeekValue={40}
+            yesterdayValue={2}
+            thresholds={[12, 35, 75]}
+            categories={["Buena", "Moderada", "Pobre", "Peligrosa"]}
+            unit="µg/m³" />
+    },
+    {
+        label: "PM2.5", value: "pm2.5", content: <ViewCharts
+            title="PM2.5"
+            color={colorConfig[3].color}
+            dataKey={colorConfig[3].dataKey}
+            lastWeekValue={10}
+            yesterdayValue={50}
+            thresholds={[12, 35, 75]}
+            categories={["Buena", "Moderada", "Pobre", "Peligrosa"]}
+            unit="µg/m³" />
+    },
+    {
+        label: "PM10", value: "pm10", content: <ViewCharts
+            title="PM10"
+            color={colorConfig[4].color}
+            dataKey={colorConfig[4].dataKey}
+            lastWeekValue={10}
+            yesterdayValue={120}
+            thresholds={[50, 150, 250]}
+            categories={["Buena", "Moderada", "Pobre", "Peligrosa"]}
+            unit="µg/m³" />
+    }
 ];
 
 export function TabsView() {

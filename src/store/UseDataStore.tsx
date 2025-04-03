@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-interface Data {
+export interface Data {
     temperature: number;
     humidity: number;
     pm2: number;
@@ -110,7 +110,7 @@ export const useDataStore = create<DataStore>((set, get) => ({
             hour: "17:25:03"
         },
         {
-            temperature: 24.3,
+            temperature: 35.3,
             humidity: 44,
             pm2: 14,
             pm2_5: 18,

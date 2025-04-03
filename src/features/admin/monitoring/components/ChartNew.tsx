@@ -1,6 +1,6 @@
 "use client"
 
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts"
 
 import {
   Card,
@@ -55,7 +55,7 @@ export function ChartNew({ color }: ChartNewProps) {
     <Card className="border-none shadow-md">
       <CardContent>
         <ChartContainer config={chartConfig}>
-          <AreaChart
+          {/* <AreaChart
             accessibilityLayer
             data={chartData}
             margin={{
@@ -64,11 +64,19 @@ export function ChartNew({ color }: ChartNewProps) {
             }}
           >
             <CartesianGrid vertical={false} />
+            <YAxis
+              tickMargin={8}
+              tickLine={false}
+              axisLine={false}
+              fontSize={11}
+            >
+            </YAxis>
             <XAxis
               dataKey="month"
               tickLine={false}
               axisLine={false}
               tickMargin={8}
+              fontSize={11}
               tickFormatter={(value) => value.slice(0, 3)}
             />
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
@@ -95,7 +103,30 @@ export function ChartNew({ color }: ChartNewProps) {
               stroke="var(--color-desktop)"
               stackId="a"
             />
-          </AreaChart>
+          </AreaChart> */}
+          <BarChart margin={{
+            left: 15,
+          }}
+            accessibilityLayer data={chartData}>
+            <CartesianGrid vertical={false} />
+            <XAxis
+              dataKey="month"
+              tickMargin={10}
+              axisLine={false}
+              interval={3}
+              fontSize={11}
+            />
+            <YAxis
+              tickMargin={10}
+              axisLine={false}
+              fontSize={11}
+            />
+            <ChartTooltip
+              cursor={true}
+              content={<ChartTooltipContent hideLabel />}
+            />
+            <Bar dataKey="desktop" fill={color} radius={8} />
+          </BarChart>
         </ChartContainer>
       </CardContent>
     </Card>
