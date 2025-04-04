@@ -4,17 +4,18 @@ import { ChartExport } from './ChartExport';
 
 interface ViewChartsProps {
     title: string;
-    color: string;
+    data: any;
+    sensor: any;
 }
 
-const ViewCharts: React.FC<ViewChartsProps> = ({ title, color }) => {
+const ViewCharts: React.FC<ViewChartsProps> = ({ title, data, sensor }) => {
     return (
         <Card className='border-none bg-gray-50 shadow-none'>
             <CardHeader className='px-0'>
                 <CardTitle>{title}</CardTitle>
             </CardHeader>
             <CardContent className='p-0'>
-                <ChartExport color={color} />
+                <ChartExport data={data} sensor={sensor} />
 
             </CardContent>
         </Card>

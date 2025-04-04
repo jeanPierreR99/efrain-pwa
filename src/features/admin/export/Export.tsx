@@ -49,7 +49,7 @@ const Export = () => {
                 </Select>
                 <div className='flex flex-col md:flex-row gap-4 mt-4'>
                     <FormDateExport date={date} setDate={setDate} />
-                    <Button className='w-fit' onClick={handleClick}>{load && <Loader2 className='animate-spin' />}Comparar</Button>
+                    <Button className='w-fit' onClick={handleClick}>{load && <Loader2 className='animate-spin' />}Buscar</Button>
                 </div>
                 {error && <span className='text-red-500 text-sm'>Seleccione el rango de fechas</span>}
             </div>

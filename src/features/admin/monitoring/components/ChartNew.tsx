@@ -1,6 +1,6 @@
 "use client"
 
-import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts"
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 
 import {
   Card,
@@ -12,121 +12,82 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/shared/ui/chart"
-interface ChartNewProps {
-  color: string
-}
-export function ChartNew({ color }: ChartNewProps) {
+import { colorConfig } from "../../home/components/ViewMonitoringMap"
 
-  const chartData = [
-    { month: "January", desktop: 186, mobile: 186 },
-    { month: "February", desktop: 190, mobile: 200 },
-    { month: "March", desktop: 237, mobile: 120 },
-    { month: "April", desktop: 73, mobile: 190 },
-    { month: "May", desktop: 209, mobile: 130 },
-    { month: "June", desktop: 214, mobile: 140 },
-    { month: "January", desktop: 186, mobile: 186 },
-    { month: "February", desktop: 190, mobile: 200 },
-    { month: "March", desktop: 237, mobile: 120 },
-    { month: "April", desktop: 73, mobile: 190 },
-    { month: "May", desktop: 209, mobile: 130 },
-    { month: "June", desktop: 214, mobile: 140 },
-    { month: "January", desktop: 186, mobile: 186 },
-    { month: "February", desktop: 190, mobile: 200 },
-    { month: "March", desktop: 237, mobile: 120 },
-    { month: "April", desktop: 73, mobile: 210 },
-    { month: "May", desktop: 20, mobile: 130 },
-    { month: "June", desktop: 224, mobile: 140 },
-    { month: "January", desktop: 86, mobile: 186 },
-    { month: "February", desktop: 190, mobile: 200 },
-    { month: "March", desktop: 267, mobile: 60 },
-    { month: "April", desktop: 73, mobile: 90 },
-    { month: "May", desktop: 209, mobile: 30 },
-    { month: "June", desktop: 214, mobile: 140 },
-  ]
+export function ChartNew({ data, sensor }: any) {
 
   const chartConfig = {
-    desktop: {
-      color: color,
+    temperature: {
+      color: colorConfig[0].color,
+    },
+    humidity: {
+      color: colorConfig[1].color,
+    },
+    pm2: {
+      color: colorConfig[2].color,
+    },
+    pm2_5: {
+      color: colorConfig[3].color,
+    },
+    pm10: {
+      color: colorConfig[4].color,
+    },
+    co2: {
+      color: colorConfig[5].color,
     },
   } satisfies ChartConfig
 
-
   return (
     <Card className="border-none shadow-md">
-      <CardContent>
-        <ChartContainer config={chartConfig}>
-          {/* <AreaChart
+      <CardContent className="p-0">
+        <ChartContainer className="md:h-[400px] w-full" config={chartConfig}>
+          <AreaChart
             accessibilityLayer
-            data={chartData}
+            data={data}
             margin={{
-              left: 12,
-              right: 12,
+              right: 20,
             }}
           >
             <CartesianGrid vertical={false} />
             <YAxis
-              tickMargin={8}
-              tickLine={false}
+              tickMargin={10}
               axisLine={false}
               fontSize={11}
-            >
-            </YAxis>
+              tickLine={true}
+            />
             <XAxis
-              dataKey="month"
-              tickLine={false}
+              dataKey="hour"
+              tickLine={true}
               axisLine={false}
               tickMargin={8}
-              fontSize={11}
-              tickFormatter={(value) => value.slice(0, 3)}
+              interval={4}
             />
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
             <defs>
-              <linearGradient id="fillDesktop" x1="0" y1="0" x2="0" y2="1">
+              <linearGradient id={`fill${sensor}`} x1="0" y1="0" x2="0" y2="1">
                 <stop
                   offset="5%"
-                  stopColor="var(--color-desktop)"
+                  stopColor={`var(--color-${sensor})`}
                   stopOpacity={0.8}
                 />
                 <stop
                   offset="95%"
-                  stopColor="var(--color-desktop)"
+                  stopColor={`var(--color-${sensor})`}
                   stopOpacity={0.1}
                 />
               </linearGradient>
+
             </defs>
 
             <Area
-              dataKey="desktop"
+              dataKey={sensor}
               type="linear"
-              fill="url(#fillDesktop)"
+              fill={`url(#fill${sensor})`}
               fillOpacity={0.4}
-              stroke="var(--color-desktop)"
+              stroke={`var(--color-${sensor})`}
               stackId="a"
             />
-          </AreaChart> */}
-          <BarChart margin={{
-            left: 15,
-          }}
-            accessibilityLayer data={chartData}>
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="month"
-              tickMargin={10}
-              axisLine={false}
-              interval={3}
-              fontSize={11}
-            />
-            <YAxis
-              tickMargin={10}
-              axisLine={false}
-              fontSize={11}
-            />
-            <ChartTooltip
-              cursor={true}
-              content={<ChartTooltipContent hideLabel />}
-            />
-            <Bar dataKey="desktop" fill={color} radius={8} />
-          </BarChart>
+          </AreaChart>
         </ChartContainer>
       </CardContent>
     </Card>

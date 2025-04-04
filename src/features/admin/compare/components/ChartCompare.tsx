@@ -1,6 +1,6 @@
 "use client"
 
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
 
 import {
     Card,
@@ -17,10 +17,10 @@ import { colorConfig } from "../../home/components/ViewMonitoringMap"
 export function ChartCompare({ chartData, sensor }: any) {
 
     const chartConfig = {
-        temperatura: {
+        temperature: {
             color: colorConfig[0].color,
         },
-        humedad: {
+        humidity: {
             color: colorConfig[1].color,
         },
         pm2: {
@@ -40,23 +40,28 @@ export function ChartCompare({ chartData, sensor }: any) {
 
     return (
         <Card className="border-none shadow-md">
-            <CardContent>
+            <CardContent className="p-0">
                 <ChartContainer config={chartConfig}>
                     <AreaChart
                         accessibilityLayer
                         data={chartData}
                         margin={{
-                            left: 12,
-                            right: 12,
+                            right: 20,
                         }}
                     >
                         <CartesianGrid vertical={false} />
+                        <YAxis
+                            tickMargin={10}
+                            axisLine={false}
+                            fontSize={11}
+                            tickLine={true}
+                        />
                         <XAxis
-                            dataKey="month"
-                            tickLine={false}
+                            dataKey="hour"
+                            tickLine={true}
                             axisLine={false}
                             tickMargin={8}
-                            tickFormatter={(value) => value.slice(0, 3)}
+                            interval={2}
                         />
                         <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
                         <defs>

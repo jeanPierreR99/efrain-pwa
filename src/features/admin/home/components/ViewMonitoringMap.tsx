@@ -57,7 +57,7 @@ interface IColor {
 
 
 const ViewMonitoringMap: React.FC<ViewMonitoringMapProps> = ({ position }) => {
-    const { data, getLastData } = useDataStore();
+    const { getLastTenData, getLastData } = useDataStore();
     const [evaluation, setEvaluation] = useState("s/e");
     console.log(position)
 
@@ -168,31 +168,31 @@ const ViewMonitoringMap: React.FC<ViewMonitoringMapProps> = ({ position }) => {
             <CardTitle>Otros</CardTitle>
 
             <div className='grid grid-cols-2 gap-2'>
-                <Chart colorConfig={colorConfig[0]} chartData={data}></Chart>
+                <Chart colorConfig={colorConfig[0]} chartData={getLastTenData()}></Chart>
                 <RadialChartView colorConfig={colorConfig[0]} chartData={getLastData()}></RadialChartView>
             </div>
 
             <div className='grid grid-cols-2 gap-2'>
-                <Chart colorConfig={colorConfig[1]} chartData={data}></Chart>
+                <Chart colorConfig={colorConfig[1]} chartData={getLastTenData()}></Chart>
                 <RadialChartView colorConfig={colorConfig[1]} chartData={getLastData()}></RadialChartView>
             </div>
 
             <div className='grid grid-cols-2 gap-2'>
-                <Chart colorConfig={colorConfig[2]} chartData={data}></Chart>
+                <Chart colorConfig={colorConfig[2]} chartData={getLastTenData()}></Chart>
                 <RadialChartView colorConfig={colorConfig[2]} chartData={getLastData()}></RadialChartView>
             </div>
 
             <div className='grid grid-cols-2 gap-2'>
-                <Chart colorConfig={colorConfig[3]} chartData={data}></Chart>
+                <Chart colorConfig={colorConfig[3]} chartData={getLastTenData()}></Chart>
                 <RadialChartView colorConfig={colorConfig[3]} chartData={getLastData()}></RadialChartView>
             </div>
 
             <div className='grid grid-cols-2 gap-2'>
-                <Chart colorConfig={colorConfig[4]} chartData={data}></Chart>
+                <Chart colorConfig={colorConfig[4]} chartData={getLastTenData()}></Chart>
                 <RadialChartView colorConfig={colorConfig[4]} chartData={getLastData()}></RadialChartView>
             </div>
             <div className='grid grid-cols-2 gap-2'>
-                <Chart colorConfig={colorConfig[5]} chartData={data}></Chart>
+                <Chart colorConfig={colorConfig[5]} chartData={getLastTenData()}></Chart>
                 <RadialChartView colorConfig={colorConfig[5]} chartData={getLastData()}></RadialChartView>
             </div>
         </div>
