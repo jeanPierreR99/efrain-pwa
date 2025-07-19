@@ -1,19 +1,29 @@
 import Map from "@/components/Map";
 import { useDataStore } from "@/store/UseDataStore";
-import { format, parse } from 'date-fns'
-import { es } from 'date-fns/locale'
 
 const Home = () => {
-    const { getLastData } = useDataStore();
+    const { getLastData, data } = useDataStore();
 
-    function formatDateToWords(dateString: any): string {
-        const date = parse(dateString, 'dd/MM/yy', new Date())
-        return format(date, "d 'de' MMMM 'de' yyyy", { locale: es })
+    function formatDateToWords(timestamp: string): string {
+        const date = new Date(timestamp).toLocaleDateString();
+        return date;
     }
+
+    const lastData = getLastData();
 
     return (
         <div>
-            <Map edit={false} title="Manama" description={`Última actualización ${formatDateToWords(getLastData()?.date)} - ${getLastData()?.hour} (Hora local)`} />
+            {data.length === 0 || !lastData ? (
+                <div className="flex items-center justify-center h-64 text-gray-500">
+                    No hay datos disponibles
+                </div>
+            ) : (
+                <Map
+                    edit={false}
+                    title="Manama"
+                    description={`Última actualización ${formatDateToWords(lastData.date)} - ${lastData.hour} (Hora local)`}
+                />
+            )}
         </div>
     );
 };

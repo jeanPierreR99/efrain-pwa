@@ -15,7 +15,15 @@ const ViewCharts: React.FC<ViewChartsProps> = ({ title, data, sensor }) => {
                 <CardTitle>{title}</CardTitle>
             </CardHeader>
             <CardContent className='p-0'>
-                <ChartExport data={data} sensor={sensor} />
+                {data.length === 0 ? (
+                    <div className='flex items-center justify-center h-64 text-gray-500'>
+                        No hay datos disponibles
+                    </div>
+                ) : (
+                    <div className='p-4'>
+                        <ChartExport data={data} sensor={sensor} />
+                    </div>
+                )}
 
             </CardContent>
         </Card>

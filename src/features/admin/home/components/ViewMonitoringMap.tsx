@@ -46,6 +46,12 @@ export const colorConfig: IColor[] = [
         color: "#6694e3",
         medida: "ppm"
     },
+    {
+        sensor: "co",
+        dataKey: "co",
+        color: "#90d2f3",
+        medida: "ppm"
+    },
 ]
 
 interface IColor {
@@ -194,6 +200,10 @@ const ViewMonitoringMap: React.FC<ViewMonitoringMapProps> = ({ position }) => {
             <div className='grid grid-cols-2 gap-2'>
                 <Chart colorConfig={colorConfig[5]} chartData={getLastTenData()}></Chart>
                 <RadialChartView colorConfig={colorConfig[5]} chartData={getLastData()}></RadialChartView>
+            </div>
+            <div className='grid grid-cols-2 gap-2'>
+                <Chart colorConfig={colorConfig[6]} chartData={getLastTenData()}></Chart>
+                <RadialChartView colorConfig={colorConfig[6]} chartData={getLastData()}></RadialChartView>
             </div>
         </div>
     );
