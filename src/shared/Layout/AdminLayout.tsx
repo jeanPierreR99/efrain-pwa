@@ -6,8 +6,9 @@ const AdminLayout = () => {
     return (
         <div className="flex h-screen bg-gray-100">
             <AdminSidebar />
-            <div className="flex-1 overflow-auto">
-                <main className="p-4 md:p-6">
+            <div className="flex-1 overflow-auto md:ml-0">
+                {/* Añadimos padding-top solo en móviles para el header fijo */}
+                <main className="pt-16 md:pt-0 p-4 md:p-6">
                     <Outlet />
                 </main>
                 <Toaster />

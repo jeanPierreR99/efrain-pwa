@@ -34,6 +34,22 @@ export const routes: RouteObject[] = [
                 path: "map",
                 element: withSuspense(<Home />),
             },
+            
+        ],
+    },
+    {
+        path: "/admin",
+        element: <AdminLayout />,
+        errorElement: <div>Oops! Something went wrong.</div>,
+        children: [
+            {
+                index: true,
+                element: withSuspense(<Dashboard />),
+            },
+            {
+                path: "map",
+                element: withSuspense(<Home />),
+            },
             {
                 path: "new-point",
                 element: withSuspense(<NewPoint />),
@@ -49,17 +65,6 @@ export const routes: RouteObject[] = [
             {
                 path: "export",
                 element: withSuspense(<Export />)
-            }
-        ],
-    },
-    {
-        path: "/admin",
-        element: <AdminLayout />,
-        errorElement: <div>Oops! Something went wrong.</div>,
-        children: [
-            {
-                index: true,
-                element: withSuspense(<Dashboard />),
             },
             {
                 path: "users",
