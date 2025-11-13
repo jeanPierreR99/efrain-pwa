@@ -45,7 +45,7 @@ const AdminSidebar = () => {
     const handleLogout = () => {
         localStorage.removeItem('isAuthenticated');
         localStorage.removeItem('userRole');
-        navigate('/login');
+        window.location.replace('/login');
     };
 
     const toggleSidebar = () => {

@@ -21,12 +21,12 @@ const Login = () => {
             // Usuario administrador
             localStorage.setItem("userRole", "admin");
             localStorage.setItem("isAuthenticated", "true");
-            navigate("/admin");
+            window.location.assign("/admin");
         } else if (email === "user@example.com" && password === "user123") {
             // Usuario normal
             localStorage.setItem("userRole", "user");
             localStorage.setItem("isAuthenticated", "true");
-            navigate("/map");
+            window.location.assign("/map");
         } else {
             setError("Credenciales incorrectas");
         }
@@ -54,7 +54,7 @@ const Login = () => {
                                 required
                             />
                         </div>
-                        <div className="space-y-2">
+                        <div className="space-y-2 pb-4">
                             <Label htmlFor="password">Contraseña</Label>
                             <Input 
                                 id="password" 
@@ -70,8 +70,9 @@ const Login = () => {
                             </div>
                         )}
                     </CardContent>
-                    <CardFooter>
+                    <CardFooter className="flex flex-col gap-2">
                         <Button type="submit" className="w-full">Iniciar sesión</Button>
+                        <Button type="button" className="w-full bg-gray-200 text-gray-700 hover:bg-gray-300" onClick={() => navigate("/")}>Volver al inicio</Button>
                     </CardFooter>
                 </form>
             </Card>

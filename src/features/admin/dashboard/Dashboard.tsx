@@ -1,9 +1,8 @@
 import { useDataStore } from "@/store/UseDataStore";
 import { useMarkerStore } from "@/store/UseMarkerStore";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/shared/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/shared/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/ui/tabs";
-import { BarChart3, MapPin, Users, Settings, Home as HomeIcon } from "lucide-react";
-import { Link } from "react-router-dom";
+import { BarChart3, MapPin, Users, Settings } from "lucide-react";
 import StatsOverview from "./components/StatsOverview";
 import RecentActivity from "./components/RecentActivity";
 
@@ -75,30 +74,6 @@ const Dashboard = () => {
                     </TabsContent>
                 </Tabs>
 
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                    <Card className="col-span-1">
-                        <CardHeader>
-                            <CardTitle>Accesos Rápidos</CardTitle>
-                            <CardDescription>Accede rápidamente a las funciones principales</CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="flex flex-col space-y-2">
-                                <Link to="/map" className="flex items-center p-2 rounded-md hover:bg-gray-100">
-                                    <HomeIcon className="mr-2 h-4 w-4" />
-                                    <span>Mapa Principal</span>
-                                </Link>
-                                <Link to="/new-point" className="flex items-center p-2 rounded-md hover:bg-gray-100">
-                                    <MapPin className="mr-2 h-4 w-4" />
-                                    <span>Nuevo Punto</span>
-                                </Link>
-                                <Link to="/monitoring" className="flex items-center p-2 rounded-md hover:bg-gray-100">
-                                    <BarChart3 className="mr-2 h-4 w-4" />
-                                    <span>Monitoreo</span>
-                                </Link>
-                            </div>
-                        </CardContent>
-                    </Card>
-                </div>
             </div>
         </div>
     );

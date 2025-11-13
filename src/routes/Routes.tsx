@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { RouteObject } from "react-router-dom";
+import { RouteObject, Navigate } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import AppLayout from "@/shared/Layout/AppLayout";
 import AdminLayout from "@/shared/Layout/AdminLayout";
@@ -18,6 +18,12 @@ const LoadingFallback = () => <div className="absolute left-0 w-full h-full bg-g
 const withSuspense = (Component: React.ReactNode) => (
     <Suspense fallback={<LoadingFallback />}>{Component}</Suspense>
 );
+
+const RequireAdmin = () => {
+    const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+    const userRole = localStorage.getItem('userRole');
+    return isAuthenticated && userRole === 'admin' ? <AdminLayout /> : <Navigate to="/login" replace />;
+};
 
 // Rutas para usuarios autenticados (administradores)
 export const routes: RouteObject[] = [
@@ -39,7 +45,7 @@ export const routes: RouteObject[] = [
     },
     {
         path: "/admin",
-        element: <AdminLayout />,
+        element: <RequireAdmin />,
         errorElement: <div>Oops! Something went wrong.</div>,
         children: [
             {

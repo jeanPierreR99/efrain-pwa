@@ -1,13 +1,15 @@
 import { Button } from "@/shared/ui/button";
 import { Edit, Trash2 } from "lucide-react";
 
-const mockUsers = [
-    { id: 1, name: "Admin", email: "admin@example.com", role: "Administrador", status: "Activo" },
-    { id: 2, name: "Usuario Técnico", email: "tecnico@example.com", role: "Técnico", status: "Activo" },
-    { id: 3, name: "Usuario Invitado", email: "invitado@example.com", role: "Invitado", status: "Inactivo" },
-];
+export type User = { id: number; name: string; email: string; role: string; status: "Activo" | "Inactivo" };
 
-const UsersList = () => {
+interface UsersListProps {
+    users: User[];
+    onEdit: (user: User) => void;
+    onDelete: (id: number) => void;
+}
+
+const UsersList: React.FC<UsersListProps> = ({ users, onEdit, onDelete }) => {
     return (
         <div className="overflow-x-auto">
             <table className="w-full">
@@ -21,7 +23,7 @@ const UsersList = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {mockUsers.map((user) => (
+                    {users.map((user) => (
                         <tr key={user.id} className="border-b hover:bg-gray-50">
                             <td className="py-3 px-4">{user.name}</td>
                             <td className="py-3 px-4">{user.email}</td>
@@ -35,10 +37,10 @@ const UsersList = () => {
                             </td>
                             <td className="py-3 px-4 text-right">
                                 <div className="flex justify-end gap-2">
-                                    <Button variant="ghost" size="icon">
+                                    <Button variant="ghost" size="icon" onClick={() => onEdit(user)}>
                                         <Edit size={16} />
                                     </Button>
-                                    <Button variant="ghost" size="icon">
+                                    <Button variant="ghost" size="icon" onClick={() => onDelete(user.id)}>
                                         <Trash2 size={16} />
                                     </Button>
                                 </div>
