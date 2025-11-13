@@ -18,7 +18,7 @@ const AdminSidebar = () => {
         { icon: <FileDown size={20} />, label: "Comparaciones", path: "/admin/compare" },
         { icon: <FileDown size={20} />, label: "Exportar", path: "/admin/export" },
         { icon: <Users size={20} />, label: "Usuarios", path: "/admin/users" },
-        { icon: <Settings size={20} />, label: "Configuración", path: "/admin/settings" },
+        // { icon: <Settings size={20} />, label: "Configuración", path: "/admin/settings" },
     ];
 
     // Detectar cambios en el tamaño de la pantalla

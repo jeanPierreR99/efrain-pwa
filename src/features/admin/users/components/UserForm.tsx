@@ -6,22 +6,30 @@ import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage, FormDes
 import { Input } from "@/shared/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/ui/select";
 
-const schema = z.object({
+const baseSchema = z.object({
   name: z.string().min(1, { message: "Requerido" }),
   email: z.string().email({ message: "Email inválido" }),
   role: z.string().min(1, { message: "Requerido" }),
   status: z.enum(["Activo", "Inactivo"]),
+  password: z.string().optional(),
 });
 
-type FormValues = z.infer<typeof schema>;
+type FormValues = z.infer<typeof baseSchema>;
 
 interface UserFormProps {
   defaultValues?: Partial<FormValues>;
   onSubmit: (data: FormValues) => void;
   onCancel: () => void;
+  mode?: "create" | "edit";
 }
 
-const UserForm: React.FC<UserFormProps> = ({ defaultValues, onSubmit, onCancel }) => {
+const UserForm: React.FC<UserFormProps> = ({ defaultValues, onSubmit, onCancel, mode = "create" }) => {
+  const schema = baseSchema.superRefine((val, ctx) => {
+    if (mode === "create" && (!val.password || val.password.length < 6)) {
+      ctx.addIssue({ code: z.ZodIssueCode.custom, path: ["password"], message: "Mínimo 6 caracteres" });
+    }
+  });
+
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -29,6 +37,7 @@ const UserForm: React.FC<UserFormProps> = ({ defaultValues, onSubmit, onCancel }
       email: "",
       role: "Administrador",
       status: "Activo",
+      password: "",
       ...defaultValues,
     },
   });
@@ -68,6 +77,22 @@ const UserForm: React.FC<UserFormProps> = ({ defaultValues, onSubmit, onCancel }
             </FormItem>
           )}
         />
+        {mode === "create" && (
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Contraseña</FormLabel>
+                <FormControl>
+                  <Input type="password" placeholder="Mínimo 6 caracteres" {...field} />
+                </FormControl>
+                <FormDescription>Se requiere para crear un usuario.</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <FormField
             control={form.control}
@@ -81,8 +106,6 @@ const UserForm: React.FC<UserFormProps> = ({ defaultValues, onSubmit, onCancel }
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="Administrador">Administrador</SelectItem>
-                    <SelectItem value="Técnico">Técnico</SelectItem>
-                    <SelectItem value="Invitado">Invitado</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />

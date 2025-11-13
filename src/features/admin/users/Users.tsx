@@ -5,24 +5,36 @@ import { PlusCircle } from "lucide-react";
 import UsersList, { type User } from "./components/UsersList";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/shared/ui/sheet";
 import UserForm from "./components/UserForm";
+import { userService } from "@/services/userService";
+import { toast } from "sonner";
 
 const Users = () => {
-    const initialUsers: User[] = [
-        { id: 1, name: "Admin", email: "admin@example.com", role: "Administrador", status: "Activo" },
-        { id: 2, name: "Usuario Técnico", email: "tecnico@example.com", role: "Técnico", status: "Activo" },
-        { id: 3, name: "Usuario Invitado", email: "invitado@example.com", role: "Invitado", status: "Inactivo" },
-    ];
-
-    const [users, setUsers] = useState<User[]>(() => {
-        const saved = localStorage.getItem("adminUsers");
-        return saved ? JSON.parse(saved) as User[] : initialUsers;
-    });
+    const [users, setUsers] = useState<User[]>([]);
     const [open, setOpen] = useState(false);
     const [editing, setEditing] = useState<User | null>(null);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        localStorage.setItem("adminUsers", JSON.stringify(users));
-    }, [users]);
+        const load = async () => {
+            setLoading(true);
+            try {
+                const list = await userService.list();
+                const mapped: User[] = list.map(u => ({
+                    id: u.id,
+                    name: u.fullName,
+                    email: u.email,
+                    role: u.role === 'administrador' ? 'Administrador' : u.role,
+                    status: u.isActive ? 'Activo' : 'Inactivo',
+                }));
+                setUsers(mapped);
+            } catch (e: any) {
+                toast.error(e?.message || 'Error cargando usuarios');
+            } finally {
+                setLoading(false);
+            }
+        };
+        load();
+    }, []);
 
     const handleNew = () => {
         setEditing(null);
@@ -34,20 +46,60 @@ const Users = () => {
         setOpen(true);
     };
 
-    const handleDelete = (id: number) => {
+    const handleDelete = async (id: string) => {
         const ok = window.confirm("¿Eliminar este usuario?");
         if (!ok) return;
-        setUsers(prev => prev.filter(u => u.id !== id));
+        try {
+            await userService.remove(id);
+            setUsers(prev => prev.filter(u => u.id !== id));
+            toast.success('Usuario eliminado');
+        } catch (e: any) {
+            toast.error(e?.message || 'Error eliminando usuario');
+        }
     };
 
-    const handleSubmit = (data: Omit<User, "id">) => {
-        if (editing) {
-            setUsers(prev => prev.map(u => u.id === editing.id ? { ...u, ...data } : u));
-        } else {
-            const nextId = users.length ? Math.max(...users.map(u => u.id)) + 1 : 1;
-            setUsers(prev => [...prev, { id: nextId, ...data }]);
+    const handleSubmit = async (data: { name: string; email: string; role: string; status: 'Activo' | 'Inactivo'; password?: string }) => {
+        try {
+            if (editing) {
+                const payload: any = {
+                    fullName: data.name,
+                    email: data.email,
+                    role: data.role === 'Administrador' ? 'administrador' : data.role,
+                    isActive: data.status === 'Activo',
+                };
+                if (data.password && data.password.length >= 6) {
+                    payload.password = data.password;
+                }
+                const updated = await userService.update(editing.id, payload);
+                setUsers(prev => prev.map(u => u.id === editing.id ? {
+                    id: updated.id,
+                    name: updated.fullName,
+                    email: updated.email,
+                    role: updated.role === 'administrador' ? 'Administrador' : updated.role,
+                    status: updated.isActive ? 'Activo' : 'Inactivo',
+                } : u));
+                toast.success('Usuario actualizado');
+            } else {
+                const created = await userService.create({
+                    fullName: data.name,
+                    email: data.email,
+                    password: data.password || '',
+                    role: data.role === 'Administrador' ? 'administrador' : data.role,
+                    isActive: data.status === 'Activo',
+                });
+                setUsers(prev => [...prev, {
+                    id: created.id,
+                    name: created.fullName,
+                    email: created.email,
+                    role: created.role === 'administrador' ? 'Administrador' : created.role,
+                    status: created.isActive ? 'Activo' : 'Inactivo',
+                }]);
+                toast.success('Usuario creado');
+            }
+            setOpen(false);
+        } catch (e: any) {
+            toast.error(e?.message || 'Error guardando usuario');
         }
-        setOpen(false);
     };
 
     return (
@@ -70,7 +122,11 @@ const Users = () => {
                         <CardDescription>Lista de usuarios registrados en el sistema.</CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <UsersList users={users} onEdit={handleEdit} onDelete={handleDelete} />
+                        {loading ? (
+                            <div className="py-6 text-sm text-muted-foreground">Cargando usuarios...</div>
+                        ) : (
+                            <UsersList users={users} onEdit={handleEdit} onDelete={handleDelete} />
+                        )}
                     </CardContent>
                 </Card>
 
@@ -89,6 +145,7 @@ const Users = () => {
                             } : undefined}
                             onSubmit={handleSubmit}
                             onCancel={() => setOpen(false)}
+                            mode={editing ? 'edit' : 'create'}
                         />
                     </SheetContent>
                 </Sheet>

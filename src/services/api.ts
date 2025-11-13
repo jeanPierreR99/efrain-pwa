@@ -48,6 +48,37 @@ class ApiClient {
     return this.handleResponse<T>(response);
   }
 
+  async put<T>(endpoint: string, data?: unknown, options?: ApiRequestOptions): Promise<T> {
+    const url = this.buildURL(endpoint, options?.params);
+
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers,
+      },
+      body: data ? JSON.stringify(data) : undefined,
+      ...options,
+    });
+
+    return this.handleResponse<T>(response);
+  }
+
+  async delete<T>(endpoint: string, options?: ApiRequestOptions): Promise<T> {
+    const url = this.buildURL(endpoint, options?.params);
+
+    const response = await fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers,
+      },
+      ...options,
+    });
+
+    return this.handleResponse<T>(response);
+  }
+
   async post<T>(endpoint: string, data?: unknown, options?: ApiRequestOptions): Promise<T> {
     const url = this.buildURL(endpoint, options?.params);
 

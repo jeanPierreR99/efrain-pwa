@@ -15,6 +15,7 @@ export interface Data {
 interface DataStore {
     data: Data[];
     addData: (data: Data) => void;
+    setData: (data: Data[]) => void;
     getLastData: () => Data | null;
     getLastTenData: () => Data[];
 }
@@ -30,6 +31,9 @@ export const useDataStore = create<DataStore>((set, get) => ({
 
         return { data: updatedData };
     }),
+    setData: (newDataArray) => set(() => ({
+        data: Array.isArray(newDataArray) ? newDataArray : [],
+    })),
     getLastData: () => {
         const data = get().data;
         return data.length > 0 ? data[data.length - 1] : null;

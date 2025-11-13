@@ -1,12 +1,12 @@
 import { Button } from "@/shared/ui/button";
 import { Edit, Trash2 } from "lucide-react";
 
-export type User = { id: number; name: string; email: string; role: string; status: "Activo" | "Inactivo" };
+export type User = { id: string; name: string; email: string; role: string; status: "Activo" | "Inactivo" };
 
 interface UsersListProps {
     users: User[];
     onEdit: (user: User) => void;
-    onDelete: (id: number) => void;
+    onDelete: (id: string) => void;
 }
 
 const UsersList: React.FC<UsersListProps> = ({ users, onEdit, onDelete }) => {
