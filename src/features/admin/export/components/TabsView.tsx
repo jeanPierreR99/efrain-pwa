@@ -1,57 +1,101 @@
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/ui/tabs";
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/shared/ui/select";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/shared/ui/select";
 import ViewCharts from "./ViewCharts";
 import { useDataStore } from "@/store/UseDataStore";
 
-
 export function TabsView() {
+  const { data } = useDataStore();
 
-    const { data } = useDataStore();
+  const tabsPath = [
+    {
+      label: "Temperatura",
+      value: "temperature",
+      content: (
+        <ViewCharts title="Temperatura" data={data} sensor={"temperature"} />
+      ),
+    },
+    {
+      label: "Humedad",
+      value: "humidity",
+      content: <ViewCharts title="Humedad" data={data} sensor={"humidity"} />,
+    },
+    {
+      label: "PM2",
+      value: "pm2",
+      content: <ViewCharts title="PM2" data={data} sensor={"pm2"} />,
+    },
+    {
+      label: "PM2.5",
+      value: "pm2.5",
+      content: <ViewCharts title="PM2.5" data={data} sensor={"pm2_5"} />,
+    },
+    {
+      label: "PM10",
+      value: "pm10",
+      content: <ViewCharts title="PM10" data={data} sensor={"pm10"} />,
+    },
+    {
+      label: "CO2",
+      value: "co2",
+      content: <ViewCharts title="CO2" data={data} sensor={"co2"} />,
+    },
+    {
+      label: "CO",
+      value: "co",
+      content: <ViewCharts title="CO" data={data} sensor={"co"} />,
+    },
+    {
+      label: "tvoc",
+      value: "tvoc",
+      content: <ViewCharts title="TVOC" data={data} sensor={"tvoc"} />,
+    },
+  ];
 
-    const tabsPath = [
-        { label: "Temperatura", value: "temperature", content: <ViewCharts title="Temperatura" data={data} sensor={"temperature"} /> },
-        { label: "Humedad", value: "humidity", content: <ViewCharts title="Humedad" data={data} sensor={"humidity"} /> },
-        { label: "PM2", value: "pm2", content: <ViewCharts title="PM2" data={data} sensor={"pm2"} /> },
-        { label: "PM2.5", value: "pm2.5", content: <ViewCharts title="PM2.5" data={data} sensor={"pm2_5"} /> },
-        { label: "PM10", value: "pm10", content: <ViewCharts title="PM10" data={data} sensor={"pm10"} /> },
-        { label: "CO2", value: "co2", content: <ViewCharts title="CO2" data={data} sensor={"co2"} /> }
-    ];
+  const [selectedTab, setSelectedTab] = useState(tabsPath[0].value);
 
-    const [selectedTab, setSelectedTab] = useState(tabsPath[0].value);
+  return (
+    <Tabs
+      value={selectedTab}
+      onValueChange={setSelectedTab}
+      className="w-full mt-4"
+    >
+      <div className="md:hidden mb-2">
+        <Select onValueChange={setSelectedTab} value={selectedTab}>
+          <SelectTrigger className="w-full bg-white">
+            <SelectValue placeholder="Selecciona una opción" />
+          </SelectTrigger>
+          <SelectContent>
+            {tabsPath.map((tab) => (
+              <SelectItem key={tab.value} value={tab.value}>
+                {tab.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
 
-    return (
-        <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full mt-4">
-            <div className="md:hidden mb-2">
-                <Select onValueChange={setSelectedTab} value={selectedTab}>
-                    <SelectTrigger className="w-full bg-white">
-                        <SelectValue placeholder="Selecciona una opción" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        {tabsPath.map((tab) => (
-                            <SelectItem key={tab.value} value={tab.value}>
-                                {tab.label}
-                            </SelectItem>
-                        ))}
-                    </SelectContent>
-                </Select>
-            </div>
+      <TabsList className="hidden md:flex w-full overflow-x-auto gap-2 whitespace-nowrap scrollbar-hide">
+        {tabsPath.map((tab) => (
+          <TabsTrigger key={tab.value} value={tab.value}>
+            {tab.label}
+          </TabsTrigger>
+        ))}
+      </TabsList>
 
-            <TabsList className="hidden md:flex w-full overflow-x-auto gap-2 whitespace-nowrap scrollbar-hide">
-                {tabsPath.map((tab) => (
-                    <TabsTrigger key={tab.value} value={tab.value}>
-                        {tab.label}
-                    </TabsTrigger>
-                ))}
-            </TabsList>
-
-            {tabsPath.map((tab) =>
-                tab.value === selectedTab ? (
-                    <TabsContent key={tab.value} value={tab.value}>
-                        {tab.content}
-                    </TabsContent>
-                ) : null
-            )}
-        </Tabs>
-    );
+      {tabsPath.map((tab) =>
+        tab.value === selectedTab ? (
+          <TabsContent key={tab.value} value={tab.value}>
+            {tab.content}
+          </TabsContent>
+        ) : null
+      )}
+    </Tabs>
+  );
 }

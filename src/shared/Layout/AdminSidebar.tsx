@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
-import { NavLink, useNavigate, useLocation } from "react-router-dom";
-import { BarChart3, Home, MapPin, Users, Settings, LayoutDashboard, FileDown, LogOut, Menu, X } from "lucide-react";
+import { NavLink, useLocation } from "react-router-dom";
+import { BarChart3, Home, MapPin, Users, LayoutDashboard, FileDown, LogOut, Menu, X } from "lucide-react";
 import LOGO from "../../assets/images/logo.webp";
 import { Button } from "@/shared/ui/button";
 
 const AdminSidebar = () => {
-    const navigate = useNavigate();
     const location = useLocation();
     const [isOpen, setIsOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);

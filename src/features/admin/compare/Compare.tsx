@@ -1,8 +1,8 @@
-import { Button } from '@/shared/ui/button';
-import { FormDateCompare } from './components/FormDateCompare';
-import { useState } from 'react';
-import { format } from 'date-fns';
-import { useMarkerStore } from '@/store/UseMarkerStore';
+import { Button } from "@/shared/ui/button";
+import { FormDateCompare } from "./components/FormDateCompare";
+import { useState } from "react";
+import { format } from "date-fns";
+import { useMarkerStore } from "@/store/UseMarkerStore";
 import {
   Select,
   SelectContent,
@@ -10,37 +10,37 @@ import {
   SelectItem,
   SelectLabel,
   SelectTrigger,
-  SelectValue
-} from '@/shared/ui/select';
-import { Loader2 } from 'lucide-react';
-import ChartViewCompare from './components/ChartViewCompare';
-import { Data } from '@/store/UseDataStore';
-import { compareService } from '@/services/compareService';
+  SelectValue,
+} from "@/shared/ui/select";
+import { Loader2 } from "lucide-react";
+import ChartViewCompare from "./components/ChartViewCompare";
+import { Data } from "@/store/UseDataStore";
+import { compareService } from "@/services/compareService";
 
 const Compare = () => {
   const { markers } = useMarkerStore();
-  const [selectedPoint, setSelectedPoint] = useState<string>('');
+  const [selectedPoint, setSelectedPoint] = useState<string>("");
   const [dateFirst, setDateFirst] = useState<Date>();
   const [dateSecond, setDateSecond] = useState<Date>();
   const [dateFirstAux, setDateFirstAux] = useState<string>();
   const [dateSecondAux, setDateSecondAux] = useState<string>();
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [load, setLoad] = useState(false);
   const [data, setData] = useState<Data[]>([]);
 
   const formatDate = (date?: Date): string => {
-    if (!date) return '';
-    return format(date, 'dd/MM/yy');
+    if (!date) return "";
+    return format(date, "dd/MM/yy");
   };
 
   const handleClick = async () => {
     // Validaciones
     if (!dateFirst || !dateSecond) {
-      setError('Seleccione ambas fechas');
+      setError("Seleccione ambas fechas");
       return;
     }
 
-    setError('');
+    setError("");
     setLoad(true);
 
     const dateAuxFirst = formatDate(dateFirst);
@@ -54,7 +54,7 @@ const Compare = () => {
       });
 
       if (responseData.length === 0) {
-        setError('No se encontraron datos para las fechas seleccionadas');
+        setError("No se encontraron datos para las fechas seleccionadas");
         setData([]);
       } else {
         setData(responseData);
@@ -65,7 +65,7 @@ const Compare = () => {
       setError(
         err instanceof Error
           ? err.message
-          : 'Error al obtener los datos. Intente nuevamente.'
+          : "Error al obtener los datos. Intente nuevamente."
       );
       setData([]);
     } finally {
@@ -95,17 +95,15 @@ const Compare = () => {
         <div className="flex flex-col md:flex-row gap-4 mt-4">
           <FormDateCompare date={dateFirst} setDate={setDateFirst} />
           <FormDateCompare date={dateSecond} setDate={setDateSecond} />
-          <Button
-            className="w-fit"
-            onClick={handleClick}
-            disabled={load}
-          >
+          <Button className="w-fit" onClick={handleClick} disabled={load}>
             {load && <Loader2 className="animate-spin mr-2" />}
             Comparar
           </Button>
         </div>
 
-        {error && <span className="text-red-500 text-sm mt-2 block">{error}</span>}
+        {error && (
+          <span className="text-red-500 text-sm mt-2 block">{error}</span>
+        )}
       </div>
 
       {data.length > 0 && (
@@ -158,6 +156,13 @@ const Compare = () => {
             dateFirst={dateFirstAux}
             dateSecond={dateSecondAux}
             sensor="co"
+          />
+          <ChartViewCompare
+            title="Tvoc"
+            chartData={data}
+            dateFirst={dateFirstAux}
+            dateSecond={dateSecondAux}
+            sensor="tvoc"
           />
         </div>
       )}
