@@ -1,37 +1,18 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { SocketProvider } from './shared/providers/SocketProvider'; // 👈 NUEVO IMPORT
 import { routes, routesLogin } from './routes/Routes';
+import './index.css';
 
-const App = () => {
-  // Verificar autenticación desde localStorage
-  const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
-  const userRole = localStorage.getItem('userRole');
-  const isAdmin = isAuthenticated && userRole === 'admin';
-  const isUser = isAuthenticated && userRole === 'user';
-  
-  // Crear routers según el tipo de usuario
-  const adminRouter = createBrowserRouter(routes);
-  const userRouter = createBrowserRouter(routesLogin);
-
-  // Determinar qué router usar basado en el rol del usuario
-  let router;
-  if (isAdmin) {
-    router = adminRouter; // Administrador: acceso completo
-  } else if (isUser) {
-    router = userRouter; // Usuario normal: acceso limitado a /map
-  } else {
-    router = userRouter; // No autenticado: redirigir a login
-  }
-
-  return (
-    <RouterProvider router={router} />
-  );
-};
+// Determinar qué rutas usar según autenticación
+const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+const router = createBrowserRouter(isAuthenticated ? routes : routesLogin);
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
-  </StrictMode>,
+    <SocketProvider>
+      <RouterProvider router={router} />
+    </SocketProvider>
+  </StrictMode>
 );
