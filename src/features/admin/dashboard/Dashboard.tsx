@@ -6,11 +6,31 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/ui/tabs";
 import { BarChart3, MapPin, Users, Settings } from "lucide-react";
 import StatsOverview from "./components/StatsOverview";
 import RecentActivity from "./components/RecentActivity";
+import { useDataStoreMonitoring } from '@/store/UseDataStoreMonitoring';
+import { useEffect } from 'react';
+import { monitoringService } from "@/services/monitoringService";
 
 const Dashboard = () => {
   const { data } = useDataStore();
   const { markers } = useMarkerStore();
   const { isConnected } = useSocketStore();
+  const { setLoading, setMonitoringData, isLoading } = useDataStoreMonitoring();
+
+  const fetchMonitoringData = async (date: string) => {
+    setLoading(true);
+    try {
+      const data = await monitoringService.getMonitoringData(date);
+      setMonitoringData(data);
+      setLoading(false);
+    } catch (error) {
+      console.log(error)
+    }
+  };
+
+  // Usar useEffect para llamar la función solo cuando el componente se monte
+  useEffect(() => {
+    fetchMonitoringData('2025-09-22');
+  }, []); // Array de dependencias vacío para que se ejecute solo una vez
 
   return (
     <div className="py-10 max-w-[1225px] mx-auto lg:px-0 px-4">
@@ -19,6 +39,14 @@ const Dashboard = () => {
           <h1 className="text-3xl font-bold tracking-tight">Panel de Administración</h1>
           <p className="text-muted-foreground">Gestiona todos los aspectos de tu aplicación desde aquí.</p>
         </div>
+
+        {/* Mostrar estado de carga */}
+        {isLoading && (
+          <div className="flex justify-center items-center py-8">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+            <span className="ml-2">Cargando datos de monitoreo...</span>
+          </div>
+        )}
 
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <Card>
