@@ -35,6 +35,9 @@ export function ChartNew({ data, sensor }: any) {
     co2: {
       color: colorConfig[5].color,
     },
+    tvoc: {
+      color: colorConfig[7].color,
+    },
   } satisfies ChartConfig
 
   return (
