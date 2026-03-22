@@ -10,7 +10,7 @@ interface ViewChartsProps {
 
 const ViewCharts: React.FC<ViewChartsProps> = ({ title, data, sensor }) => {
     return (
-        <Card className='border-none bg-gray-50 shadow-none'>
+        <Card className='border-none bg-gray-50 shadow-none px-4'>
             <CardHeader className='px-0'>
                 <CardTitle>{title}</CardTitle>
             </CardHeader>

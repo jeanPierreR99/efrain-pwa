@@ -45,6 +45,7 @@ const transformSensorData = (apiData: Record<string, SensorReading>): Data[] => 
     pm10: reading.pm.pm10,
     co2: reading.co2,
     co: reading.co,
+    tvoc: reading.tvoc,
     date: format(new Date(reading.timestamp), 'dd/MM/yy'),
     hour: reading.hour,
     timestamp: reading.timestamp,
@@ -54,7 +55,7 @@ const transformSensorData = (apiData: Record<string, SensorReading>): Data[] => 
 /**
  * Convierte formato dd/MM/yy a yyyy-MM-dd para la API
  */
-const formatDateForApi = (dateString: string): string => {
+export const formatDateForApi = (dateString: string): string => {
   const date = parse(dateString, 'dd/MM/yy', new Date());
   return format(date, 'yyyy-MM-dd');
 };
@@ -79,6 +80,10 @@ export const compareService = {
         throw new Error('Error al obtener datos del sensor');
       }
 
+      if (!response.data) {
+        throw new Error('No hay datos en esas fechas');
+      }
+
       return transformSensorData(response.data);
     } catch (error) {
       console.error('Error al obtener datos de comparación:', error);
@@ -89,12 +94,13 @@ export const compareService = {
   /**
    * Obtiene datos de un rango de fechas específico
    */
-  getDataByDateRange: async (
+
+  getDataForExportExcel: async (
     startDate: string,
     endDate: string
   ): Promise<Data[]> => {
     try {
-      const response = await apiClient.get<ApiResponse>('/sensor/range', {
+      const response = await apiClient.get<ApiResponse>('/sensor/export-to-excel', {
         params: {
           from: startDate,
           to: endDate,
@@ -103,6 +109,10 @@ export const compareService = {
 
       if (!response.success) {
         throw new Error('Error al obtener datos del sensor');
+      }
+
+      if (!response.data) {
+        throw new Error('No hay datos en esas fechas');
       }
 
       return transformSensorData(response.data);
@@ -129,6 +139,10 @@ export const compareService = {
 
       if (!response.success) {
         throw new Error('Error al obtener datos del sensor');
+      }
+
+      if (!response.data) {
+        throw new Error('No hay datos en esas fechas');
       }
 
       return transformSensorData(response.data);

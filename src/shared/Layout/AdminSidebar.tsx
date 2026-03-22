@@ -8,19 +8,17 @@ const AdminSidebar = () => {
     const location = useLocation();
     const [isOpen, setIsOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
-    
+
     const navItems = [
-        { icon: <LayoutDashboard size={20} />, label: "Dashboard", path: "/admin" },
-        { icon: <Home size={20} />, label: "Mapa", path: "/admin/map" },
-        { icon: <MapPin size={20} />, label: "Nuevo Punto", path: "/admin/new-point" },
-        { icon: <BarChart3 size={20} />, label: "Monitoreo", path: "/admin/monitoring" },
-        { icon: <FileDown size={20} />, label: "Comparaciones", path: "/admin/compare" },
-        { icon: <FileDown size={20} />, label: "Exportar", path: "/admin/export" },
-        { icon: <Users size={20} />, label: "Usuarios", path: "/admin/users" },
-        // { icon: <Settings size={20} />, label: "Configuración", path: "/admin/settings" },
+        { icon: <LayoutDashboard size={20} />, label: "Dashboard", path: "/" },
+        { icon: <Home size={20} />, label: "Mapa", path: "/map" },
+        { icon: <MapPin size={20} />, label: "Nuevo Punto", path: "/new-point" },
+        { icon: <BarChart3 size={20} />, label: "Monitoreo", path: "/monitoring" },
+        { icon: <FileDown size={20} />, label: "Comparaciones", path: "/compare" },
+        { icon: <FileDown size={20} />, label: "Exportar", path: "/export" },
+        { icon: <Users size={20} />, label: "Usuarios", path: "/users" },
     ];
 
-    // Detectar cambios en el tamaño de la pantalla
     useEffect(() => {
         const handleResize = () => {
             const mobile = window.innerWidth < 768;
@@ -34,7 +32,6 @@ const AdminSidebar = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
-    // Cerrar sidebar al cambiar de ruta en móviles
     useEffect(() => {
         if (isMobile) {
             setIsOpen(false);
@@ -53,13 +50,12 @@ const AdminSidebar = () => {
 
     return (
         <>
-            {/* Mobile Header */}
             <div className="md:hidden fixed top-0 left-0 right-0 z-40 bg-white border-b shadow-sm p-4 flex items-center justify-between">
                 <div className="h-[40px] w-[120px]">
                     <img className="w-full h-full object-cover" src={LOGO} alt="logo.png" />
                 </div>
-                <Button 
-                    variant="ghost" 
+                <Button
+                    variant="ghost"
                     size="icon"
                     onClick={toggleSidebar}
                     aria-label="Toggle menu"
@@ -68,22 +64,20 @@ const AdminSidebar = () => {
                 </Button>
             </div>
 
-            {/* Overlay para móviles */}
             {isOpen && (
-                <div 
+                <div
                     className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
                     onClick={toggleSidebar}
                 />
             )}
 
-            {/* Sidebar */}
             <aside className={`fixed md:relative top-0 left-0 h-full w-64 bg-white border-r shadow-sm z-40 transition-transform md:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
                 <div className="p-4 border-b h-16 flex items-center">
                     <div className="h-[40px] w-[120px]">
                         <img className="w-full h-full object-cover" src={LOGO} alt="logo.png" />
                     </div>
-                    <Button 
-                        variant="ghost" 
+                    <Button
+                        variant="ghost"
                         size="icon"
                         className="ml-auto md:hidden"
                         onClick={toggleSidebar}
@@ -110,8 +104,8 @@ const AdminSidebar = () => {
                         ))}
                     </ul>
                     <div className="pt-4 border-t">
-                        <Button 
-                            variant="ghost" 
+                        <Button
+                            variant="ghost"
                             className="w-full justify-start text-red-500 hover:text-red-600 hover:bg-red-50"
                             onClick={handleLogout}
                         >

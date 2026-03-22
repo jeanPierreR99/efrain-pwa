@@ -19,6 +19,7 @@ interface DataStore {
   setData: (data: Data[]) => void;
   getLastData: () => Data | null;
   getLastTenData: () => Data[];
+  average10Data: () => any;
 }
 
 export const useDataStore = create<DataStore>((set, get) => ({
@@ -45,4 +46,8 @@ export const useDataStore = create<DataStore>((set, get) => ({
     const data = get().data;
     return data.slice(-10);
   },
+  average10Data: () => {  
+    return get().data.slice(-10)
+      .reduce((sum, curr) => sum + (curr.pm2_5 || 0), 0) / 10;
+  }  
 }));

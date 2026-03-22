@@ -11,7 +11,6 @@ import Compare from "@/features/admin/compare/Compare";
 import Export from "@/features/admin/export/Export";
 import Dashboard from "@/features/admin/dashboard/Dashboard";
 import Users from "@/features/admin/users/Users";
-// import Settings from "@/features/admin/settings/Settings";
 
 const LoadingFallback = () => <div className="absolute left-0 w-full h-full bg-gray-100/70 z-10 flex justify-center items-center"><Loader2 className="animate-spin text-blue-500" /></div>;
 
@@ -25,26 +24,9 @@ const RequireAdmin = () => {
     return isAuthenticated && userRole === 'admin' ? <AdminLayout /> : <Navigate to="/login" replace />;
 };
 
-// Rutas para usuarios autenticados (administradores)
 export const routes: RouteObject[] = [
     {
         path: "/",
-        element: <AppLayout />,
-        errorElement: <div>Oops! Something went wrong.</div>,
-        children: [
-            {
-                index: true,
-                element: withSuspense(<Home />),
-            },
-            {
-                path: "map",
-                element: withSuspense(<Home />),
-            },
-            
-        ],
-    },
-    {
-        path: "/admin",
         element: <RequireAdmin />,
         errorElement: <div>Oops! Something went wrong.</div>,
         children: [
@@ -76,19 +58,14 @@ export const routes: RouteObject[] = [
                 path: "users",
                 element: withSuspense(<Users />),
             },
-            // {
-            //     path: "settings",
-            //     element: withSuspense(<Settings />),
-            // },
+            {
+                path: "*",
+                element: <Navigate to="/" replace />
+            }
         ],
-    },
-    {
-        path: "/login",
-        element: withSuspense(<Login />),
     },
 ];
 
-// Definición de rutas para usuarios no autenticados (acceso público al mapa)
 export const routesLogin: RouteObject[] = [
     {
         path: "/",
@@ -111,6 +88,6 @@ export const routesLogin: RouteObject[] = [
     },
     {
         path: "*",
-        element: withSuspense(<Home />), // Redirigir cualquier otra ruta al mapa
+        element: withSuspense(<Home />)
     }
 ];

@@ -3,19 +3,22 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrig
 import { useState } from "react";
 import FormDateExport from "./components/FormDateExport";
 import { Button } from "@/shared/ui/button";
-import { Loader2 } from "lucide-react";
+import { Download, Loader2 } from "lucide-react";
 import { format } from "date-fns";
 import { TabsView } from "./components/TabsView";
-import { compareService } from "@/services/compareService";
+import { compareService, formatDateForApi } from "@/services/compareService";
 import { useDataStore } from "@/store/UseDataStore";
+import { API_BASE_URL } from "@/services/api";
+import { toast } from "sonner";
 
 const Export = () => {
     const { markers } = useMarkerStore()
     const { setData } = useDataStore()
     const [date, setDate] = useState<{ from?: Date; to?: Date }>({})
-    const [error, setError] = useState(false)
+    const [error, setError] = useState("")
     const [load, setLoad] = useState(false);
     const [selectedPoint, setSelectedPoint] = useState<string>("");
+    const [exportLoading, setExportLoading] = useState(false);
 
     const formatDate = (date?: Date): string => {
         if (!date) return '';
@@ -24,10 +27,9 @@ const Export = () => {
 
     const handleClick = async () => {
         if (!date.from || !date?.to) {
-            setError(true)
+            setError("Seleccione el rango de fechas")
             return
         }
-        setError(false)
         setLoad(true)
         const dateAuxFrom = formatDate(date.from)
         const dateAuxTo = formatDate(date.to)
@@ -37,18 +39,55 @@ const Export = () => {
                 dateSecond: dateAuxTo,
             });
             if (responseData.length === 0) {
-                setError(true);
+                setError("No hay datos en esas fechas");
                 setData([]);
             } else {
                 setData(responseData);
             }
-        } catch (e) {
-            setError(true);
+        } catch (e: any) {
+            setError(e.message || "error");
             setData([]);
         } finally {
             setLoad(false);
         }
     }
+
+    const handleExport = async () => {
+
+        const dateAuxFrom = formatDate(date.from)
+        const dateAuxTo = formatDate(date.to)
+
+        setExportLoading(true)
+        try {
+            const response = await fetch(`${API_BASE_URL}/sensor/export-to-excel?from=${formatDateForApi(dateAuxFrom)}&to=${formatDateForApi(dateAuxTo)}`, {
+                method: 'GET',
+            });
+
+            if (!response.ok) {
+                throw new Error('Error exporting file');
+            }
+
+            const blob = await response.blob();
+
+            const url = window.URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'measurements.xlsx';
+
+            document.body.appendChild(a);
+            a.click();
+
+            a.remove();
+            window.URL.revokeObjectURL(url);
+
+        } catch (error: any) {
+            console.error(error);
+            toast.error(error.message);
+        } finally {
+            setExportLoading(false)
+        }
+    };
 
     return (
         <div className="py-10 max-w-[1225px] mx-auto lg:px-0 px-4">
@@ -67,8 +106,20 @@ const Export = () => {
                 <div className='flex flex-col md:flex-row gap-4 mt-4'>
                     <FormDateExport date={date} setDate={setDate} />
                     <Button className='w-fit' onClick={handleClick} disabled={load}>{load && <Loader2 className='animate-spin' />}Buscar</Button>
+                    {date.from && date.to && <Button
+                        className="w-fit"
+                        onClick={handleExport}
+                        disabled={exportLoading}
+                    >
+                        {exportLoading ? (
+                            <Loader2 className="animate-spin" />
+                        ) : (
+                            <Download />
+                        )}
+                        Exportar todo
+                    </Button>}
                 </div>
-                {error && <span className='text-red-500 text-sm'>Seleccione el rango de fechas</span>}
+                {error && <span className='text-red-500 text-sm'>{error}</span>}
             </div>
             <div className='mt-8'>
                 <TabsView></TabsView>

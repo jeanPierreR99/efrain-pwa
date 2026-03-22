@@ -13,17 +13,12 @@ const Home = () => {
 
     return (
         <div>
-            {data.length === 0 || !lastData ? (
-                <div className="flex items-center justify-center h-64 text-gray-500">
-                    No hay datos disponibles
-                </div>
-            ) : (
-                <Map
-                    edit={false}
-                    title="Manama"
-                    description={`Última actualización ${formatDateToWords(lastData.date)} - ${lastData.hour} (Hora local)`}
-                />
-            )}
+            <Map
+                edit={false}
+                title="Manama"
+                description={`${(data && lastData) ? `Última actualización ${formatDateToWords(lastData.date)} - ${lastData.hour} (Hora local)` : 'no hay datos disponibles'}`}
+            />
+
         </div>
     );
 };

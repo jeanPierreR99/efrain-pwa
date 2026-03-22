@@ -36,7 +36,7 @@ type MonitoringResponse = {
 };
 
 export const monitoringService = {
-  async getMonitoringData(date: string): Promise<MonitoringData> {
+  async getMonitoringData(date: string) {
     const res = await apiClient.get<MonitoringResponse>(`/sensor/specificdate-monitoring?date=${date}`);
 
     if (!res.success) {

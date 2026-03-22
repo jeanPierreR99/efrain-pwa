@@ -14,8 +14,7 @@ import { useDataStoreMonitoring } from "@/store/UseDataStoreMonitoring";
 
 export function TabsView() {
   const { data } = useDataStore();
-  const { getDateAverage } = useDataStoreMonitoring();
-
+  const { monitoringData } = useDataStoreMonitoring();
   const tabsPath = [
     {
       label: "Temperatura",
@@ -25,8 +24,8 @@ export function TabsView() {
           title="Temperatura"
           data={data}
           dataKey={colorConfig[0].dataKey}
-          lastWeekValue={getDateAverage('oneWeekAgo', colorConfig[0].dataKey)!}
-          yesterdayValue={getDateAverage('oneDayAgo', colorConfig[0].dataKey)!}
+          lastWeekValue={monitoringData?.oneWeekAgo?.average?.[colorConfig[0].dataKey] || 0}
+          yesterdayValue={monitoringData?.oneDayAgo?.average?.[colorConfig[0].dataKey] || 0}
           thresholds={[22, 28, 35]}
           categories={["Buena", "Moderada", "Pobre", "Peligrosa"]}
           unit="°C"
@@ -41,8 +40,8 @@ export function TabsView() {
           title="Humedad"
           data={data}
           dataKey={colorConfig[1].dataKey}
-          lastWeekValue={getDateAverage('oneWeekAgo', colorConfig[1].dataKey)!}
-          yesterdayValue={getDateAverage('oneDayAgo', colorConfig[1].dataKey)!}
+          lastWeekValue={monitoringData?.oneWeekAgo?.average?.[colorConfig[1].dataKey]}
+          yesterdayValue={monitoringData?.oneDayAgo?.average?.[colorConfig[1].dataKey]}
           thresholds={[30, 60, 85]}
           categories={["Buena", "Moderada", "Pobre", "Peligrosa"]}
           unit="%"
@@ -57,8 +56,8 @@ export function TabsView() {
           title="PM2"
           data={data}
           dataKey={colorConfig[2].dataKey}
-          lastWeekValue={getDateAverage('oneWeekAgo', colorConfig[2].dataKey)!}
-          yesterdayValue={getDateAverage('oneDayAgo', colorConfig[2].dataKey)!}
+          lastWeekValue={monitoringData?.oneWeekAgo?.average?.[colorConfig[2].dataKey]}
+          yesterdayValue={monitoringData?.oneDayAgo?.average?.[colorConfig[2].dataKey]}
           thresholds={[12, 35, 75]}
           categories={["Buena", "Moderada", "Pobre", "Peligrosa"]}
           unit="µg/m³"
@@ -73,8 +72,8 @@ export function TabsView() {
           title="PM2.5"
           data={data}
           dataKey={colorConfig[3].dataKey}
-          lastWeekValue={getDateAverage('oneWeekAgo', colorConfig[3].dataKey)!}
-          yesterdayValue={getDateAverage('oneDayAgo', colorConfig[3].dataKey)!}
+          lastWeekValue={monitoringData?.oneWeekAgo?.average?.[colorConfig[3].dataKey] || 0}
+          yesterdayValue={monitoringData?.oneDayAgo?.average?.[colorConfig[3].dataKey] || 0}
           thresholds={[12, 35, 75]}
           categories={["Buena", "Moderada", "Pobre", "Peligrosa"]}
           unit="µg/m³"
@@ -89,8 +88,8 @@ export function TabsView() {
           title="PM10"
           data={data}
           dataKey={colorConfig[4].dataKey}
-          lastWeekValue={getDateAverage('oneWeekAgo', colorConfig[4].dataKey)!}
-          yesterdayValue={getDateAverage('oneDayAgo', colorConfig[4].dataKey)!}
+          lastWeekValue={monitoringData?.oneWeekAgo?.average?.[colorConfig[4].dataKey] || 0}
+          yesterdayValue={monitoringData?.oneDayAgo?.average?.[colorConfig[4].dataKey] || 0}
           thresholds={[50, 150, 250]}
           categories={["Buena", "Moderada", "Pobre", "Peligrosa"]}
           unit="µg/m³"
@@ -105,8 +104,8 @@ export function TabsView() {
           title="CO2"
           data={data}
           dataKey={colorConfig[5].dataKey}
-          lastWeekValue={getDateAverage('oneWeekAgo', colorConfig[5].dataKey)!}
-          yesterdayValue={getDateAverage('oneDayAgo', colorConfig[5].dataKey)!}
+          lastWeekValue={monitoringData?.oneWeekAgo?.average?.[colorConfig[5].dataKey] || 0}
+          yesterdayValue={monitoringData?.oneDayAgo?.average?.[colorConfig[5].dataKey] || 0}
           thresholds={[400, 1000, 2000]}
           categories={["Buena", "Moderada", "Pobre", "Peligrosa"]}
           unit="°C"
@@ -121,8 +120,8 @@ export function TabsView() {
           title="CO"
           data={data}
           dataKey={colorConfig[6].dataKey}
-          lastWeekValue={getDateAverage('oneWeekAgo', colorConfig[6].dataKey)!}
-          yesterdayValue={getDateAverage('oneDayAgo', colorConfig[6].dataKey)!}
+          lastWeekValue={monitoringData?.oneWeekAgo?.average?.[colorConfig[6].dataKey] || 0}
+          yesterdayValue={monitoringData?.oneDayAgo?.average?.[colorConfig[6].dataKey] || 0}
           thresholds={[400, 1000, 2000]}
           categories={["Buena", "Moderada", "Pobre", "Peligrosa"]}
           unit="ppm"
@@ -130,15 +129,15 @@ export function TabsView() {
       ),
     },
     {
-      label: "tvoc",
+      label: "TVOC",
       value: "tvoc",
       content: (
         <ViewCharts
           title="Tvoc"
           data={data}
           dataKey={colorConfig[7].dataKey}
-          lastWeekValue={300}
-          yesterdayValue={2700}
+          lastWeekValue={monitoringData?.oneWeekAgo?.average?.[colorConfig[7].dataKey] || 0}
+          yesterdayValue={monitoringData?.oneDayAgo?.average?.[colorConfig[7].dataKey] || 0}
           thresholds={[400, 1000, 2000]}
           categories={["Buena", "Moderada", "Pobre", "Peligrosa"]}
           unit="ppb"

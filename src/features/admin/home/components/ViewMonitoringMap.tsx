@@ -9,6 +9,16 @@ interface ViewMonitoringMapProps {
   position: [number, number] | null;
 }
 
+export type SensorKey =
+  | "temperature"
+  | "humidity"
+  | "pm2"
+  | "pm2_5"
+  | "pm10"
+  | "co2"
+  | "co"
+  | "tvoc";
+
 export const colorConfig: IColor[] = [
   {
     sensor: "temperatura",
@@ -60,10 +70,10 @@ export const colorConfig: IColor[] = [
   },
 ];
 
-interface IColor {
+export interface IColor {
   sensor: string;
+  dataKey: SensorKey;
   color: string;
-  dataKey: string;
   medida: string;
 }
 
@@ -263,6 +273,16 @@ const ViewMonitoringMap: React.FC<ViewMonitoringMapProps> = ({ position }) => {
         ></Chart>
         <RadialChartView
           colorConfig={colorConfig[6]}
+          chartData={getLastData()}
+        ></RadialChartView>
+      </div>
+      <div className="grid grid-cols-2 gap-2">
+        <Chart
+          colorConfig={colorConfig[6]}
+          chartData={getLastTenData()}
+        ></Chart>
+        <RadialChartView
+          colorConfig={colorConfig[7]}
           chartData={getLastData()}
         ></RadialChartView>
       </div>

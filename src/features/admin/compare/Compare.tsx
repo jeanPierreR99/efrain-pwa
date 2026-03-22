@@ -52,8 +52,7 @@ const Compare = () => {
         dateFirst: dateAuxFirst,
         dateSecond: dateAuxSecond,
       });
-
-      if (responseData.length === 0) {
+      if (!responseData) {
         setError("No se encontraron datos para las fechas seleccionadas");
         setData([]);
       } else {
@@ -61,11 +60,12 @@ const Compare = () => {
         setDateFirstAux(dateAuxFirst);
         setDateSecondAux(dateAuxSecond);
       }
-    } catch (err) {
+    } catch (err: any) {
+      console.log(err)
+
       setError(
-        err instanceof Error
-          ? err.message
-          : "Error al obtener los datos. Intente nuevamente."
+        err.message
+        || "Error al obtener los datos. Intente nuevamente."
       );
       setData([]);
     } finally {

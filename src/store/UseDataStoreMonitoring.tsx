@@ -30,6 +30,26 @@ export interface MonitoringData {
   oneWeekAgo: DateData;
 }
 
+export interface DateData2 {
+  date: string;
+  average: {
+    temperature: number | null;
+    humidity: number | null;
+    pm2: number | null;
+    pm2_5: number | null;
+    pm10: number | null;
+    co2: number | null;
+    co: number | null;
+    tvoc: number | null;
+  };
+}
+
+export interface MonitoringData2 {
+  mainDate: DateData2;
+  oneDayAgo: DateData2;
+  oneWeekAgo: DateData2;
+}
+
 // Tipo para las métricas disponibles
 type MetricKey =
   | 'temperature'
@@ -42,10 +62,10 @@ type MetricKey =
   | 'tvoc';
 
 interface DataStoreMonitoring {
-  monitoringData: MonitoringData | null;
+  monitoringData: MonitoringData2 | null;
   isLoading: boolean;
   error: string | null;
-  setMonitoringData: (data: MonitoringData) => void;
+  setMonitoringData: (data: MonitoringData2) => void;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
 
@@ -178,8 +198,7 @@ const transformData = (data: { [key: string]: Measurement }) => {
   }));
 };
 
-// Función helper para calcular promedios
-// const calculateAverage = (data: any[], metric: MetricKey): number | null => {
+// helper para calcular promedios
 const calculateAverage = (data: any[], metric: string): number | null => {
   if (!data || data.length === 0) return null;
 

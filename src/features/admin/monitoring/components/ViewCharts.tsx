@@ -8,8 +8,8 @@ interface ViewChartsProps {
     title: string;
     data: any;
     dataKey: any;
-    lastWeekValue: number;
-    yesterdayValue: number;
+    lastWeekValue: any;
+    yesterdayValue: any;
     thresholds: number[];
     categories: string[];
     unit: string;
@@ -17,7 +17,7 @@ interface ViewChartsProps {
 
 const ViewCharts: React.FC<ViewChartsProps> = ({ title, data, dataKey, lastWeekValue, yesterdayValue, thresholds, categories, unit }) => {
     return (
-        <Card className='border-none bg-gray-50 shadow-none'>
+        <Card className='border-none bg-gray-50 shadow-none px-4'>
             <CardHeader className='px-0'>
                 <CardTitle>{title}</CardTitle>
                 <div className='flex md:flex-row flex-col justify-between gap-4'>
@@ -27,11 +27,11 @@ const ViewCharts: React.FC<ViewChartsProps> = ({ title, data, dataKey, lastWeekV
                     </div>
                     <div className='flex flex-col gap-2 md:w-fit'>
                         <span className='text-gray-500s text-center font-bold text-sm'>Ayer</span>
-                        <CardQualityPast data={yesterdayValue} thresholds={thresholds} categories={categories} unit={unit}></CardQualityPast>
+                        <CardQualityPast data={yesterdayValue.toFixed(2)} thresholds={thresholds} categories={categories} unit={unit}></CardQualityPast>
                     </div>
                     <div className='flex flex-col gap-2 md:w-fit'>
                         <span className='text-gray-500s text-center font-bold text-sm'>Semana pasada</span>
-                        <CardQualityPast data={lastWeekValue} thresholds={thresholds} categories={categories} unit={unit}></CardQualityPast>
+                        <CardQualityPast data={lastWeekValue.toFixed(2)} thresholds={thresholds} categories={categories} unit={unit}></CardQualityPast>
                     </div>
                 </div>
             </CardHeader>

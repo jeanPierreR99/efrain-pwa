@@ -1,5 +1,5 @@
 // src/services/api.ts
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000';
 
 interface ApiRequestOptions extends RequestInit {
   params?: Record<string, string | number | boolean>;

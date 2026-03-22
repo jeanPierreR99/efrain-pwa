@@ -39,7 +39,6 @@ export const SocketProvider = ({ children }: SocketProviderProps) => {
     if (!socketRef.current) {
       console.log('🔌 Iniciando conexión de socket...');
       socketRef.current = io(API_BASE, {
-        transports: ['websocket', 'polling'],
         reconnection: true,
         reconnectionDelay: 1000,
       });
@@ -116,7 +115,7 @@ export const SocketProvider = ({ children }: SocketProviderProps) => {
       socket.off('new-measurement', onNewMeasurement);
       socket.offAny();
     };
-  }, [addData, setConnected]);
+  }, [ setConnected]);
 
   // Desconectar al desmontar el componente
   useEffect(() => {
