@@ -278,7 +278,7 @@ const ViewMonitoringMap: React.FC<ViewMonitoringMapProps> = ({ position }) => {
       </div>
       <div className="grid grid-cols-2 gap-2">
         <Chart
-          colorConfig={colorConfig[6]}
+          colorConfig={colorConfig[7]}
           chartData={getLastTenData()}
         ></Chart>
         <RadialChartView

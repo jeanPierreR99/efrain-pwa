@@ -7,13 +7,13 @@ import { Download, Loader2 } from "lucide-react";
 import { format } from "date-fns";
 import { TabsView } from "./components/TabsView";
 import { compareService, formatDateForApi } from "@/services/compareService";
-import { useDataStore } from "@/store/UseDataStore";
+import { Data } from "@/store/UseDataStore";
 import { API_BASE_URL } from "@/services/api";
 import { toast } from "sonner";
 
 const Export = () => {
     const { markers } = useMarkerStore()
-    const { setData } = useDataStore()
+    const [dataCompare, setDataCompare] = useState<Data[]>([])
     const [date, setDate] = useState<{ from?: Date; to?: Date }>({})
     const [error, setError] = useState("")
     const [load, setLoad] = useState(false);
@@ -38,15 +38,16 @@ const Export = () => {
                 dateFirst: dateAuxFrom,
                 dateSecond: dateAuxTo,
             });
+            setError("");
             if (responseData.length === 0) {
                 setError("No hay datos en esas fechas");
-                setData([]);
+                setDataCompare([]);
             } else {
-                setData(responseData);
+                setDataCompare(responseData);
             }
         } catch (e: any) {
             setError(e.message || "error");
-            setData([]);
+            setDataCompare([]);
         } finally {
             setLoad(false);
         }
@@ -90,7 +91,7 @@ const Export = () => {
     };
 
     return (
-        <div className="py-10 max-w-[1225px] mx-auto lg:px-0 px-4">
+        <div className="py-10 max-w-[1425px] mx-auto lg:px-0 px-4">
             <div>
                 <Select value={selectedPoint} onValueChange={setSelectedPoint}>
                     <SelectTrigger className="w-[180px] bg-white">
@@ -122,7 +123,7 @@ const Export = () => {
                 {error && <span className='text-red-500 text-sm'>{error}</span>}
             </div>
             <div className='mt-8'>
-                <TabsView></TabsView>
+                <TabsView compare dataCompare={dataCompare}></TabsView>
             </div>
         </div>
     );

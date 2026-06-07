@@ -59,7 +59,7 @@ export function RadialChartView({ colorConfig, chartData }: any) {
                           y={viewBox.cy}
                           className="fill-foreground text-lg font-bold"
                         >
-                          {data[0][colorConfig.dataKey] + " " + colorConfig.medida}
+                          {data[0][colorConfig.dataKey] || 0 + " " + colorConfig.medida}
                         </tspan>
                         <tspan
                           x={viewBox.cx}

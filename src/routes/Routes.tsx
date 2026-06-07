@@ -80,14 +80,19 @@ export const routesLogin: RouteObject[] = [
                 path: "map",
                 element: withSuspense(<Home />),
             },
+            {
+                path: "monitoring",
+                element: withSuspense(<Monitoring />),
+            },
+            {
+                path: "*",
+                element: withSuspense(<Home />)
+            }
         ],
+
     },
     {
         path: "/login",
         element: withSuspense(<Login />),
     },
-    {
-        path: "*",
-        element: withSuspense(<Home />)
-    }
 ];

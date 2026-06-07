@@ -74,7 +74,7 @@ const Compare = () => {
   };
 
   return (
-    <div className="py-10 max-w-[1225px] mx-auto lg:px-0 px-4">
+    <div className="py-10 max-w-[1425px] mx-auto lg:px-0 px-4">
       <div>
         <Select value={selectedPoint} onValueChange={setSelectedPoint}>
           <SelectTrigger className="w-[180px] bg-white">
@@ -106,7 +106,7 @@ const Compare = () => {
         )}
       </div>
 
-      {data.length > 0 && (
+      {data.length > 0 ? (
         <div className="flex flex-col gap-8 mt-8">
           <ChartViewCompare
             title="Temperatura"
@@ -165,7 +165,9 @@ const Compare = () => {
             sensor="tvoc"
           />
         </div>
-      )}
+      ) : <div className='flex bg-white mt-4 rounded-xl items-center justify-center h-64 text-gray-500'>
+        No hay datos disponibles
+      </div>}
     </div>
   );
 };

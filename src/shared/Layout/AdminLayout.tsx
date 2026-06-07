@@ -29,7 +29,7 @@ const AdminLayout = () => {
                 <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50">
                     <div className="bg-white p-6 rounded-xl shadow-lg flex items-center gap-3">
                         <div className="animate-spin rounded-full h-8 w-8 border-4 border-gray-300 border-t-gray-900"></div>
-                        <span className="font-medium">Cargando datos de monitoreo...</span>
+                        <span className="font-medium">Estableciendo conexión...</span>
                     </div>
                 </div>
             )}

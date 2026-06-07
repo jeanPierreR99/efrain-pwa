@@ -7,7 +7,7 @@ import { DropDown } from "@/features/admin/home/components/DropDown";
 const links = [
     { path: "/map", label: "Mapa" },
     // { path: "/new-point", label: "Nuevo Punto" },
-    // { path: "/monitoring", label: "Monitoreo" },
+    { path: "/monitoring", label: "Monitoreo" },
     // { path: "/compare", label: "Comparaciones" },
     // { path: "/export", label: "Exportar" }
 ];

@@ -42,6 +42,7 @@ export interface DateData2 {
     co: number | null;
     tvoc: number | null;
   };
+  data: any
 }
 
 export interface MonitoringData2 {

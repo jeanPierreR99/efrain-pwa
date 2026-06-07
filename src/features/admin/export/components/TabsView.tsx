@@ -8,9 +8,15 @@ import {
   SelectItem,
 } from "@/shared/ui/select";
 import ViewCharts from "./ViewCharts";
-import { useDataStore } from "@/store/UseDataStore";
+import { Data, useDataStore } from "@/store/UseDataStore";
 
-export function TabsView() {
+
+interface Props {
+  compare?: boolean
+  dataCompare?: Data[]
+}
+
+export function TabsView({ compare, dataCompare }: Props) {
   const { data } = useDataStore();
 
   const tabsPath = [
@@ -18,43 +24,43 @@ export function TabsView() {
       label: "Temperatura",
       value: "temperature",
       content: (
-        <ViewCharts title="Temperatura" data={data} sensor={"temperature"} />
+        <ViewCharts title="Temperatura" data={compare ? dataCompare : data} sensor={"temperature"} />
       ),
     },
     {
       label: "Humedad",
       value: "humidity",
-      content: <ViewCharts title="Humedad" data={data} sensor={"humidity"} />,
+      content: <ViewCharts title="Humedad" data={compare ? dataCompare : data} sensor={"humidity"} />,
     },
     {
       label: "PM2",
       value: "pm2",
-      content: <ViewCharts title="PM2" data={data} sensor={"pm2"} />,
+      content: <ViewCharts title="PM2" data={compare ? dataCompare : data} sensor={"pm2"} />,
     },
     {
       label: "PM2.5",
       value: "pm2.5",
-      content: <ViewCharts title="PM2.5" data={data} sensor={"pm2_5"} />,
+      content: <ViewCharts title="PM2.5" data={compare ? dataCompare : data} sensor={"pm2_5"} />,
     },
     {
       label: "PM10",
       value: "pm10",
-      content: <ViewCharts title="PM10" data={data} sensor={"pm10"} />,
+      content: <ViewCharts title="PM10" data={compare ? dataCompare : data} sensor={"pm10"} />,
     },
     {
       label: "CO2",
       value: "co2",
-      content: <ViewCharts title="CO2" data={data} sensor={"co2"} />,
+      content: <ViewCharts title="CO2" data={compare ? dataCompare : data} sensor={"co2"} />,
     },
     {
       label: "CO",
       value: "co",
-      content: <ViewCharts title="CO" data={data} sensor={"co"} />,
+      content: <ViewCharts title="CO" data={compare ? dataCompare : data} sensor={"co"} />,
     },
     {
       label: "tvoc",
       value: "tvoc",
-      content: <ViewCharts title="TVOC" data={data} sensor={"tvoc"} />,
+      content: <ViewCharts title="TVOC" data={compare ? dataCompare : data} sensor={"tvoc"} />,
     },
   ];
 

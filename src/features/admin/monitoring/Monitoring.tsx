@@ -5,7 +5,7 @@ import { useMarkerStore } from "@/store/UseMarkerStore";
 const Monitoring = () => {
     const { markers } = useMarkerStore()
     return (
-        <div className="py-10 max-w-[1225px] mx-auto lg:px-0 px-4">
+        <div className="py-10 max-w-[1425px] mx-auto lg:px-0 px-4">
             <Select>
                 <SelectTrigger className="w-[180px] bg-white">
                     <SelectValue placeholder="Seleccione un punto" />

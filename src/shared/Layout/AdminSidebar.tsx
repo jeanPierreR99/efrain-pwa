@@ -66,7 +66,7 @@ const AdminSidebar = () => {
 
             {isOpen && (
                 <div
-                    className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
+                    className="fixed inset-0 bg-black/30 bg-opacity-50 z-30 md:hidden"
                     onClick={toggleSidebar}
                 />
             )}

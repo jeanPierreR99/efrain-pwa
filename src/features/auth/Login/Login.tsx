@@ -3,191 +3,270 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 import { Label } from "@/shared/ui/label";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/shared/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/shared/ui/card";
 import { userService } from "@/services/userService";
 import { toast } from "sonner";
-import { AlertCircle, CheckCircle2, XCircle } from "lucide-react";
+import {
+  AlertCircle,
+  CheckCircle2,
+  XCircle,
+  Mail,
+  Lock,
+  Eye,
+  EyeOff,
+  ShieldCheck,
+} from "lucide-react";
 
 const Login = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
-    const [isLoading, setIsLoading] = useState(false);
-    const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-    const handleLogin = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setError("");
-        setIsLoading(true);
-        
-        try {
-            const res = await userService.login(email, password);
-            if (res.success) {
-                const role = res.user?.role || 'usuario';
-                const mappedRole = role === 'administrador' ? 'admin' : role;
-                localStorage.setItem("userRole", mappedRole);
-                localStorage.setItem("isAuthenticated", "true");
-                
-                // Mostrar toast de éxito
-                toast.success("¡Inicio de sesión exitoso!", {
-                    description: `Bienvenido de vuelta`,
-                    icon: <CheckCircle2 className="h-4 w-4 text-green-500" />,
-                });
+  const navigate = useNavigate();
 
-                // Pequeño delay para que se vea el toast
-                setTimeout(() => {
-                    if (mappedRole === 'admin') {
-                        window.location.assign("/admin");
-                    } else {
-                        window.location.assign("/map");
-                    }
-                }, 500);
-                
-            } else {
-                const errorMsg = res.message || "Credenciales incorrectas";
-                setError(errorMsg);
-                toast.error("Error de autenticación", {
-                    description: errorMsg,
-                    icon: <XCircle className="h-4 w-4 text-red-500" />,
-                });
-            }
-        } catch (e: any) {
-            const msg = e?.message || 'Error de red';
-            setError(msg);
-            toast.error("Error de conexión", {
-                description: msg,
-                icon: <XCircle className="h-4 w-4 text-red-500" />,
-            });
-        } finally {
-            setIsLoading(false);
-        }
-    };
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-    return (
-        <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
-            <Card className="w-full max-w-md shadow-xl border-0 bg-white/80 backdrop-blur-sm">
-                <CardHeader className="space-y-1 text-center pb-2">
-                    <div className="mx-auto w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mb-2">
-                        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                        </svg>
-                    </div>
-                    <CardTitle className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                        Iniciar sesión
-                    </CardTitle>
-                    <CardDescription className="text-gray-600">
-                        Ingresa tus credenciales para acceder al sistema
-                    </CardDescription>
-                </CardHeader>
-                
-                <form onSubmit={handleLogin}>
-                    <CardContent className="space-y-4 pt-4">
-                        {/* Alert de error mejorado */}
-                        {error && (
-                            <div className="animate-in fade-in-50 slide-in-from-top-3 duration-300">
-                                <div className="flex items-start gap-3 p-3 border border-red-200 bg-red-50 rounded-lg">
-                                    <AlertCircle className="h-5 w-5 text-red-500 mt-0.5 flex-shrink-0" />
-                                    <div className="flex-1">
-                                        <p className="text-sm font-medium text-red-800">Error de autenticación</p>
-                                        <p className="text-sm text-red-600 mt-1">{error}</p>
-                                    </div>
-                                    <button 
-                                        type="button"
-                                        onClick={() => setError("")}
-                                        className="text-red-400 hover:text-red-600 transition-colors"
-                                    >
-                                        <XCircle className="h-4 w-4" />
-                                    </button>
-                                </div>
-                            </div>
-                        )}
+    setError("");
+    setIsLoading(true);
 
-                        <div className="space-y-2">
-                            <Label htmlFor="email" className="text-sm font-medium text-gray-700">
-                                Correo electrónico
-                            </Label>
-                            <Input 
-                                id="email" 
-                                type="email" 
-                                placeholder="correo@ejemplo.com" 
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required
-                                className={`transition-all duration-200 ${
-                                    error ? 'border-red-300 focus:border-red-500 focus:ring-red-200' : ''
-                                }`}
-                                disabled={isLoading}
-                            />
-                        </div>
-                        
-                        <div className="space-y-2">
-                            <Label htmlFor="password" className="text-sm font-medium text-gray-700">
-                                Contraseña
-                            </Label>
-                            <Input 
-                                id="password" 
-                                type="password" 
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                                className={`transition-all duration-200 ${
-                                    error ? 'border-red-300 focus:border-red-500 focus:ring-red-200' : ''
-                                }`}
-                                disabled={isLoading}
-                            />
-                        </div>
+    try {
+      const res = await userService.login(email, password);
 
-                        {/* Enlace de recuperación de contraseña */}
-                        <div className="text-right">
-                            <button 
-                                type="button"
-                                className="text-sm text-blue-600 hover:text-blue-800 transition-colors font-medium"
-                                onClick={() => navigate("/forgot-password")}
-                            >
-                                ¿Olvidaste tu contraseña?
-                            </button>
-                        </div>
-                    </CardContent>
-                    
-                    <CardFooter className="flex flex-col gap-3 pt-2">
-                        <Button 
-                            type="submit" 
-                            className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 shadow-md hover:shadow-lg"
-                            disabled={isLoading}
-                        >
-                            {isLoading ? (
-                                <>
-                                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
-                                    Iniciando sesión...
-                                </>
-                            ) : (
-                                "Iniciar sesión"
-                            )}
-                        </Button>
-                        
-                        <div className="relative my-2">
-                            <div className="absolute inset-0 flex items-center">
-                                <div className="w-full border-t border-gray-300"></div>
-                            </div>
-                            <div className="relative flex justify-center text-sm">
-                                <span className="px-2 bg-white text-gray-500">o</span>
-                            </div>
-                        </div>
-                        
-                        <Button 
-                            type="button" 
-                            variant="outline"
-                            className="w-full border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-colors"
-                            onClick={() => navigate("/")}
-                            disabled={isLoading}
-                        >
-                            Volver al inicio
-                        </Button>
-                    </CardFooter>
-                </form>
-            </Card>
-        </div>
-    );
-}
+      if (res.success) {
+        const role = res.user?.role || "usuario";
+        const mappedRole =
+          role === "administrador" ? "admin" : role;
+
+        localStorage.setItem("userRole", mappedRole);
+        localStorage.setItem("isAuthenticated", "true");
+
+        toast.success("¡Inicio de sesión exitoso!", {
+          description: "Bienvenido nuevamente",
+          icon: (
+            <CheckCircle2 className="h-4 w-4 text-green-500" />
+          ),
+        });
+
+        setTimeout(() => {
+          if (mappedRole === "admin") {
+            window.location.assign("/admin");
+          } else {
+            window.location.assign("/map");
+          }
+        }, 700);
+      } else {
+        const errorMsg =
+          res.message || "Credenciales incorrectas";
+
+        setError(errorMsg);
+
+        toast.error("Error de autenticación", {
+          description: errorMsg,
+          icon: (
+            <XCircle className="h-4 w-4 text-red-500" />
+          ),
+        });
+      }
+    } catch (e: any) {
+      const msg = e?.message || "Error de conexión";
+
+      setError(msg);
+
+      toast.error("Error de conexión", {
+        description: msg,
+        icon: (
+          <XCircle className="h-4 w-4 text-red-500" />
+        ),
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 px-4">
+
+      {/* Fondo decorativo */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -left-20 top-0 h-96 w-96 rounded-full bg-blue-600/20 blur-3xl" />
+        <div className="absolute -right-20 bottom-0 h-96 w-96 rounded-full bg-indigo-600/20 blur-3xl" />
+      </div>
+
+      <Card className="relative z-10 w-full max-w-md border border-white/10 bg-white/10 backdrop-blur-xl shadow-2xl">
+
+        <CardHeader className="space-y-4 text-center">
+
+          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-gradient-to-r from-blue-500 to-indigo-600 shadow-lg">
+            <ShieldCheck className="h-10 w-10 text-white" />
+          </div>
+
+          <div>
+            <CardTitle className="text-3xl font-bold text-white">
+              Bienvenido
+            </CardTitle>
+
+            <CardDescription className="mt-2 text-slate-300">
+              Inicia sesión para acceder al sistema
+            </CardDescription>
+          </div>
+
+        </CardHeader>
+
+        <form onSubmit={handleLogin}>
+          <CardContent className="space-y-5">
+
+            {error && (
+              <div className="flex items-start gap-3 rounded-lg border border-red-500/30 bg-red-500/10 p-3">
+                <AlertCircle className="mt-0.5 h-5 w-5 text-red-400" />
+
+                <div>
+                  <p className="text-sm font-semibold text-red-300">
+                    Error de autenticación
+                  </p>
+
+                  <p className="text-sm text-red-200">
+                    {error}
+                  </p>
+                </div>
+              </div>
+            )}
+
+            <div className="space-y-2">
+              <Label
+                htmlFor="email"
+                className="text-slate-200"
+              >
+                Correo electrónico
+              </Label>
+
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="correo@ejemplo.com"
+                  value={email}
+                  onChange={(e) =>
+                    setEmail(e.target.value)
+                  }
+                  required
+                  disabled={isLoading}
+                  className="pl-10 bg-white/5 border-white/10 text-white placeholder:text-slate-400 focus:border-blue-500"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label
+                htmlFor="password"
+                className="text-slate-200"
+              >
+                Contraseña
+              </Label>
+
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+
+                <Input
+                  id="password"
+                  type={
+                    showPassword ? "text" : "password"
+                  }
+                  value={password}
+                  onChange={(e) =>
+                    setPassword(e.target.value)
+                  }
+                  required
+                  disabled={isLoading}
+                  className="pl-10 pr-10 bg-white/5 border-white/10 text-white focus:border-blue-500"
+                />
+
+                <button
+                  type="button"
+                  onClick={() =>
+                    setShowPassword(!showPassword)
+                  }
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white transition-colors"
+                >
+                  {showPassword ? (
+                    <EyeOff size={18} />
+                  ) : (
+                    <Eye size={18} />
+                  )}
+                </button>
+              </div>
+            </div>
+
+            <div className="text-right">
+              <button
+                type="button"
+                onClick={() =>
+                  navigate("/forgot-password")
+                }
+                className="text-sm text-blue-400 hover:text-blue-300 transition-colors"
+              >
+                ¿Olvidaste tu contraseña?
+              </button>
+            </div>
+
+          </CardContent>
+
+          <CardFooter className="flex flex-col gap-4">
+
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 h-11 text-white font-medium"
+            >
+              {isLoading ? (
+                <>
+                  <div className="mr-2 h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                  Iniciando sesión...
+                </>
+              ) : (
+                "Iniciar sesión"
+              )}
+            </Button>
+
+            <div className="relative w-full">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-white/10" />
+              </div>
+
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-transparent px-3 text-slate-400">
+                  o
+                </span>
+              </div>
+            </div>
+
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => navigate("/")}
+              disabled={isLoading}
+              className="w-full border-white/10 bg-white/5 text-white hover:bg-white/10"
+            >
+              Volver al inicio
+            </Button>
+
+          </CardFooter>
+        </form>
+
+      </Card>
+    </div>
+  );
+};
 
 export default Login;

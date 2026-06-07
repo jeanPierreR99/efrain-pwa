@@ -13,7 +13,7 @@ const Dashboard = () => {
   const { isConnected } = useSocketStore();
 
   return (
-    <div className="py-10 max-w-[1225px] mx-auto lg:px-0 px-4">
+    <div className="py-10 max-w-[1425px] mx-auto lg:px-0 px-4">
       <div className="flex flex-col gap-6">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Panel de Administración</h1>

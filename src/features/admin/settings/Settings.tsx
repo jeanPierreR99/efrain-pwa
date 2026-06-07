@@ -6,7 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/shared/ui/tabs";
 
 const Settings = () => {
     return (
-        <div className="py-10 max-w-[1225px] mx-auto lg:px-0 px-4">
+        <div className="py-10 max-w-[1425px] mx-auto lg:px-0 px-4">
             <div className="flex flex-col gap-6">
                 <div>
                     <h1 className="text-3xl font-bold tracking-tight">Configuración</h1>
@@ -24,7 +24,7 @@ const Settings = () => {
                             <CardHeader>
                                 <CardTitle>Configuración General</CardTitle>
                                 <CardDescription>
-                                    Configura los parámetros generales del sistema.  
+                                    Configura los parámetros generales del sistema.
                                 </CardDescription>
                             </CardHeader>
                             <CardContent className="space-y-4">
@@ -51,7 +51,7 @@ const Settings = () => {
                             <CardHeader>
                                 <CardTitle>Configuración de Notificaciones</CardTitle>
                                 <CardDescription>
-                                    Configura cómo y cuándo recibir notificaciones.  
+                                    Configura cómo y cuándo recibir notificaciones.
                                 </CardDescription>
                             </CardHeader>
                             <CardContent className="space-y-4">
@@ -78,7 +78,7 @@ const Settings = () => {
                             <CardHeader>
                                 <CardTitle>Configuración de API</CardTitle>
                                 <CardDescription>
-                                    Administra las claves y permisos de la API.  
+                                    Administra las claves y permisos de la API.
                                 </CardDescription>
                             </CardHeader>
                             <CardContent className="space-y-4">
