@@ -7,9 +7,8 @@ import {
   CircleAlert
 } from "lucide-react";
 import { toast } from "sonner";
+import { API_BASE_URL } from '@/services/api';
 
-// const API_BASE = "https://nest-iot-server.onrender.com"
-const API_BASE = "http://localhost:3000";
 
 interface SocketContextType {
   socket: Socket | null;
@@ -38,7 +37,7 @@ export const SocketProvider = ({ children }: SocketProviderProps) => {
     // Crear socket solo una vez
     if (!socketRef.current) {
       console.log('🔌 Iniciando conexión de socket...');
-      socketRef.current = io(API_BASE, {
+      socketRef.current = io(API_BASE_URL, {
         reconnection: true,
         reconnectionDelay: 1000,
       });
