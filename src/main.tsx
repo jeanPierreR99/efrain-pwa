@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { SocketProvider } from './shared/providers/SocketProvider'; // 👈 NUEVO IMPORT
 import { routes, routesLogin } from './routes/Routes';
 import './index.css';
+import InstallPWAButton from './components/InstallPWAButton';
 
 // Determinar qué rutas usar según autenticación
 const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
@@ -13,6 +14,7 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <SocketProvider>
       <RouterProvider router={router} />
+      <InstallPWAButton />
     </SocketProvider>
   </StrictMode>
 );

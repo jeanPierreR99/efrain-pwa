@@ -72,9 +72,10 @@ const AdminSidebar = () => {
             )}
 
             <aside className={`fixed md:relative top-0 left-0 h-full w-64 bg-white border-r shadow-sm z-40 transition-transform md:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-                <div className="p-4 border-b h-16 flex items-center">
-                    <div className="h-[40px] w-[120px]">
+                <div className="p-4 border-b h-16 flex items-center py-15">
+                    <div className="h-[70px] w-full mx-auto">
                         <img className="w-full h-full object-cover" src={LOGO} alt="logo.png" />
+                        <p className="text-sm text-blue-900 font-bold text-center">Sistema de Monitoreo</p>
                     </div>
                     <Button
                         variant="ghost"
@@ -86,7 +87,7 @@ const AdminSidebar = () => {
                         <X size={20} />
                     </Button>
                 </div>
-                <nav className="p-4 h-[calc(100%-4rem)] flex flex-col">
+                <nav className="p-4 h-[calc(100%-9rem)] flex flex-col">
                     <ul className="space-y-2 flex-1">
                         {navItems.map((item, index) => (
                             <li key={index}>

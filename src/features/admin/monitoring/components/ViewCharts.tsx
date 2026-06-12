@@ -17,7 +17,7 @@ interface ViewChartsProps {
 
 const ViewCharts: React.FC<ViewChartsProps> = ({ title, data, dataKey, lastWeekValue, yesterdayValue, thresholds, categories, unit }) => {
     return (
-        <Card className='border-none bg-gray-50 shadow-none px-4'>
+        <Card className='border-none bg-white shadow-none px-4'>
             <CardHeader className='px-0'>
                 <CardTitle>{title}</CardTitle>
                 <div className='flex md:flex-row flex-col justify-between gap-4'>

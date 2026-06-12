@@ -72,7 +72,7 @@ const Map: React.FC<MapProps> = ({ edit, title, description }) => {
                 {mapType === "satellite" ? "Plano 🗺️" : "Satelital 🌎"}
             </button>
 
-            <MapContainer zoomControl={false} center={[-12.589805, -69.173021]} zoom={9} maxZoom={17} className="h-[calc(100vh-70px)] w-full z-0">
+            <MapContainer zoomControl={false} center={[-12.589805, -69.173021]} zoom={9} maxZoom={17} className="h-screen w-full z-0">
                 {mapType === "satellite" ? (
                     <TileLayer
                         url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"

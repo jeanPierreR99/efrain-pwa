@@ -41,7 +41,7 @@ export function ChartNew({ data, sensor }: any) {
   } satisfies ChartConfig
 
   return (
-    <Card className="border-none shadow-md">
+    <Card className="border-none shadow-none">
       <CardContent className="p-0">
         <ChartContainer className="md:h-[400px] w-full" config={chartConfig}>
           <AreaChart
