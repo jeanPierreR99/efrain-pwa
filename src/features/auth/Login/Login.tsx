@@ -44,17 +44,14 @@ const Login = () => {
 
       if (res.success) {
         const role = res.user?.role || "usuario";
-        const mappedRole =
-          role === "administrador" ? "admin" : role;
+        const mappedRole = role === "administrador" ? "admin" : role;
 
         localStorage.setItem("userRole", mappedRole);
         localStorage.setItem("isAuthenticated", "true");
 
         toast.success("¡Inicio de sesión exitoso!", {
           description: "Bienvenido nuevamente",
-          icon: (
-            <CheckCircle2 className="h-4 w-4 text-green-500" />
-          ),
+          icon: <CheckCircle2 className="h-4 w-4 text-green-500" />,
         });
 
         setTimeout(() => {
@@ -65,28 +62,21 @@ const Login = () => {
           }
         }, 700);
       } else {
-        const errorMsg =
-          res.message || "Credenciales incorrectas";
-
+        const errorMsg = res.message || "Credenciales incorrectas";
         setError(errorMsg);
 
         toast.error("Error de autenticación", {
           description: errorMsg,
-          icon: (
-            <XCircle className="h-4 w-4 text-red-500" />
-          ),
+          icon: <XCircle className="h-4 w-4 text-red-500" />,
         });
       }
     } catch (e: any) {
       const msg = e?.message || "Error de conexión";
-
       setError(msg);
 
       toast.error("Error de conexión", {
         description: msg,
-        icon: (
-          <XCircle className="h-4 w-4 text-red-500" />
-        ),
+        icon: <XCircle className="h-4 w-4 text-red-500" />,
       });
     } finally {
       setIsLoading(false);
@@ -94,28 +84,22 @@ const Login = () => {
   };
 
   return (
-    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 px-4">
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-slate-50 via-sky-50 to-white px-4">
 
-      {/* Fondo decorativo */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -left-20 top-0 h-96 w-96 rounded-full bg-blue-600/20 blur-3xl" />
-        <div className="absolute -right-20 bottom-0 h-96 w-96 rounded-full bg-indigo-600/20 blur-3xl" />
-      </div>
-
-      <Card className="relative z-10 w-full max-w-md border border-white/10 bg-white/10 backdrop-blur-xl shadow-2xl">
+      <Card className="relative z-10 w-full max-w-md border border-slate-200 bg-white/95 backdrop-blur-xl shadow-2xl shadow-slate-300/50">
 
         <CardHeader className="space-y-4 text-center">
 
-          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-gradient-to-r from-blue-500 to-indigo-600 shadow-lg">
+          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-gradient-to-r from-sky-500 to-indigo-600 shadow-lg">
             <ShieldCheck className="h-10 w-10 text-white" />
           </div>
 
           <div>
-            <CardTitle className="text-3xl font-bold text-white">
+            <CardTitle className="text-3xl font-bold text-slate-900">
               Bienvenido
             </CardTitle>
 
-            <CardDescription className="mt-2 text-slate-300">
+            <CardDescription className="mt-2 text-slate-600">
               Inicia sesión para acceder al sistema
             </CardDescription>
           </div>
@@ -126,15 +110,14 @@ const Login = () => {
           <CardContent className="space-y-5">
 
             {error && (
-              <div className="flex items-start gap-3 rounded-lg border border-red-500/30 bg-red-500/10 p-3">
-                <AlertCircle className="mt-0.5 h-5 w-5 text-red-400" />
+              <div className="flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 p-3">
+                <AlertCircle className="mt-0.5 h-5 w-5 text-red-500" />
 
                 <div>
-                  <p className="text-sm font-semibold text-red-300">
+                  <p className="text-sm font-semibold text-red-700">
                     Error de autenticación
                   </p>
-
-                  <p className="text-sm text-red-200">
+                  <p className="text-sm text-red-600">
                     {error}
                   </p>
                 </div>
@@ -142,10 +125,7 @@ const Login = () => {
             )}
 
             <div className="space-y-2">
-              <Label
-                htmlFor="email"
-                className="text-slate-200"
-              >
+              <Label htmlFor="email" className="text-slate-700">
                 Correo electrónico
               </Label>
 
@@ -157,21 +137,16 @@ const Login = () => {
                   type="email"
                   placeholder="correo@ejemplo.com"
                   value={email}
-                  onChange={(e) =>
-                    setEmail(e.target.value)
-                  }
+                  onChange={(e) => setEmail(e.target.value)}
                   required
                   disabled={isLoading}
-                  className="pl-10 bg-white/5 border-white/10 text-white placeholder:text-slate-400 focus:border-blue-500"
+                  className="pl-10 bg-white border-slate-200 text-slate-900 placeholder:text-slate-400 focus:border-sky-500 focus:ring-sky-500"
                 />
               </div>
             </div>
 
             <div className="space-y-2">
-              <Label
-                htmlFor="password"
-                className="text-slate-200"
-              >
+              <Label htmlFor="password" className="text-slate-700">
                 Contraseña
               </Label>
 
@@ -180,30 +155,21 @@ const Login = () => {
 
                 <Input
                   id="password"
-                  type={
-                    showPassword ? "text" : "password"
-                  }
+                  type={showPassword ? "text" : "password"}
                   value={password}
-                  onChange={(e) =>
-                    setPassword(e.target.value)
-                  }
+                  placeholder="*********"
+                  onChange={(e) => setPassword(e.target.value)}
                   required
                   disabled={isLoading}
-                  className="pl-10 pr-10 bg-white/5 border-white/10 text-white focus:border-blue-500"
+                  className="pl-10 pr-10 bg-white border-slate-200 text-slate-900 focus:border-sky-500 focus:ring-sky-500"
                 />
 
                 <button
                   type="button"
-                  onClick={() =>
-                    setShowPassword(!showPassword)
-                  }
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white transition-colors"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
                 >
-                  {showPassword ? (
-                    <EyeOff size={18} />
-                  ) : (
-                    <Eye size={18} />
-                  )}
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
             </div>
@@ -211,10 +177,8 @@ const Login = () => {
             <div className="text-right">
               <button
                 type="button"
-                onClick={() =>
-                  navigate("/forgot-password")
-                }
-                className="text-sm text-blue-400 hover:text-blue-300 transition-colors"
+                onClick={() => navigate("/forgot-password")}
+                className="text-sm text-sky-600 hover:text-sky-700 transition-colors font-medium"
               >
                 ¿Olvidaste tu contraseña?
               </button>
@@ -227,7 +191,7 @@ const Login = () => {
             <Button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 h-11 text-white font-medium"
+              className="w-full bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-700 hover:to-indigo-700 h-11 text-white font-medium shadow-lg shadow-sky-500/30"
             >
               {isLoading ? (
                 <>
@@ -241,11 +205,11 @@ const Login = () => {
 
             <div className="relative w-full">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-white/10" />
+                <div className="w-full border-t border-slate-200" />
               </div>
 
               <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-transparent px-3 text-slate-400">
+                <span className="bg-white px-3 text-slate-500">
                   o
                 </span>
               </div>
@@ -256,7 +220,7 @@ const Login = () => {
               variant="outline"
               onClick={() => navigate("/")}
               disabled={isLoading}
-              className="w-full border-white/10 bg-white/5 text-white hover:bg-white/10"
+              className="w-full border-slate-300 bg-white text-slate-700 hover:bg-slate-50"
             >
               Volver al inicio
             </Button>

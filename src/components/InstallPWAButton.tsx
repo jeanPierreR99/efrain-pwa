@@ -93,7 +93,7 @@ const InstallPWAButton = () => {
                 rounded-bl-4xl
                 rounded-tr-4xl
                 border-2
-                border-red-500/40
+                border-[#00C9A3]
                 bg-white
                 px-5
                 pb-3
@@ -161,8 +161,8 @@ const InstallPWAButton = () => {
             gap-2
             rounded-2xl
             bg-gradient-to-r
-            from-red-500
-            to-orange-600
+            from-[#00C9A3]/30
+            to-[#00C9A3]
             px-4
             py-3
             text-sm
