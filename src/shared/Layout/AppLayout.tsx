@@ -25,7 +25,7 @@ const AppLayout = () => {
   }, []);
 
   return (
-    <div className='bg-gray-50'>
+    <div className='min-h-screen bg-gray-100'>
       <Header />
       {isLoading && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/40 backdrop-blur-sm z-50">

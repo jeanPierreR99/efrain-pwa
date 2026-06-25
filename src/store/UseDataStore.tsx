@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 export interface Data {
   temperature: number;
@@ -19,35 +20,50 @@ interface DataStore {
   setData: (data: Data[]) => void;
   getLastData: () => Data | null;
   getLastTenData: () => Data[];
-  average10Data: () => any;
+  average10Data: () => number;
 }
 
-export const useDataStore = create<DataStore>((set, get) => ({
-  data: [],
-  addData: (newData) =>
-    set((state) => {
-      const updatedData = [...state.data, newData];
+export const useDataStore = create<DataStore>()(
+  persist(
+    (set, get) => ({
+      data: [],
 
-      if (updatedData.length > 20) {
-        updatedData.shift();
-      }
+      addData: (newData) =>
+        set((state) => {
+          const updatedData = [...state.data, newData];
 
-      return { data: updatedData };
+          if (updatedData.length > 20) {
+            updatedData.shift();
+          }
+
+          return { data: updatedData };
+        }),
+
+      setData: (newDataArray) =>
+        set(() => ({
+          data: Array.isArray(newDataArray) ? newDataArray : [],
+        })),
+
+      getLastData: () => {
+        const data = get().data;
+        return data.length > 0 ? data[data.length - 1] : null;
+      },
+
+      getLastTenData: () => {
+        const data = get().data;
+        return data.slice(-10);
+      },
+
+      average10Data: () => {
+        const last10 = get().data.slice(-10);
+        return last10.length
+          ? last10.reduce((sum, curr) => sum + (curr.pm2_5 || 0), 0) /
+          last10.length
+          : 0;
+      },
     }),
-  setData: (newDataArray) =>
-    set(() => ({
-      data: Array.isArray(newDataArray) ? newDataArray : [],
-    })),
-  getLastData: () => {
-    const data = get().data;
-    return data.length > 0 ? data[data.length - 1] : null;
-  },
-  getLastTenData: () => {
-    const data = get().data;
-    return data.slice(-10);
-  },
-  average10Data: () => {  
-    return get().data.slice(-10)
-      .reduce((sum, curr) => sum + (curr.pm2_5 || 0), 0) / 10;
-  }  
-}));
+    {
+      name: "sensor-data-storage", // clave en localStorage
+    }
+  )
+);

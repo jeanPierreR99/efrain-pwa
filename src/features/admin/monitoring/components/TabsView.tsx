@@ -26,12 +26,15 @@ export function TabsView() {
           dataKey={colorConfig[0].dataKey}
           lastWeekValue={monitoringData?.oneWeekAgo?.average?.[colorConfig[0].dataKey] || 0}
           yesterdayValue={monitoringData?.oneDayAgo?.average?.[colorConfig[0].dataKey] || 0}
-          thresholds={[22, 28, 35]}
-          categories={["Buena", "Moderada", "Pobre", "Peligrosa"]}
+          ranges={{
+            good: { min: 18, max: 24 },
+            moderate: { min: 24.1, max: 27 }
+          }}
           unit="°C"
         />
       ),
     },
+
     {
       label: "Humedad",
       value: "humidity",
@@ -40,33 +43,20 @@ export function TabsView() {
           title="Humedad"
           data={data}
           dataKey={colorConfig[1].dataKey}
-          lastWeekValue={monitoringData?.oneWeekAgo?.average?.[colorConfig[1].dataKey]}
-          yesterdayValue={monitoringData?.oneDayAgo?.average?.[colorConfig[1].dataKey]}
-          thresholds={[30, 60, 85]}
-          categories={["Buena", "Moderada", "Pobre", "Peligrosa"]}
+          lastWeekValue={monitoringData?.oneWeekAgo?.average?.[colorConfig[1].dataKey] || 0}
+          yesterdayValue={monitoringData?.oneDayAgo?.average?.[colorConfig[1].dataKey] || 0}
+          ranges={{
+            good: { min: 30, max: 60 },
+            moderate: { min: 60.1, max: 70 }
+          }}
           unit="%"
         />
       ),
     },
-    {
-      label: "PM2",
-      value: "pm2",
-      content: (
-        <ViewCharts
-          title="PM2"
-          data={data}
-          dataKey={colorConfig[2].dataKey}
-          lastWeekValue={monitoringData?.oneWeekAgo?.average?.[colorConfig[2].dataKey]}
-          yesterdayValue={monitoringData?.oneDayAgo?.average?.[colorConfig[2].dataKey]}
-          thresholds={[12, 35, 75]}
-          categories={["Buena", "Moderada", "Pobre", "Peligrosa"]}
-          unit="µg/m³"
-        />
-      ),
-    },
+
     {
       label: "PM2.5",
-      value: "pm2.5",
+      value: "pm25",
       content: (
         <ViewCharts
           title="PM2.5"
@@ -74,12 +64,15 @@ export function TabsView() {
           dataKey={colorConfig[3].dataKey}
           lastWeekValue={monitoringData?.oneWeekAgo?.average?.[colorConfig[3].dataKey] || 0}
           yesterdayValue={monitoringData?.oneDayAgo?.average?.[colorConfig[3].dataKey] || 0}
-          thresholds={[12, 35, 75]}
-          categories={["Buena", "Moderada", "Pobre", "Peligrosa"]}
+          ranges={{
+            good: { min: 0, max: 15 },
+            moderate: { min: 15.1, max: 50 }
+          }}
           unit="µg/m³"
         />
       ),
     },
+
     {
       label: "PM10",
       value: "pm10",
@@ -90,28 +83,34 @@ export function TabsView() {
           dataKey={colorConfig[4].dataKey}
           lastWeekValue={monitoringData?.oneWeekAgo?.average?.[colorConfig[4].dataKey] || 0}
           yesterdayValue={monitoringData?.oneDayAgo?.average?.[colorConfig[4].dataKey] || 0}
-          thresholds={[50, 150, 250]}
-          categories={["Buena", "Moderada", "Pobre", "Peligrosa"]}
+          ranges={{
+            good: { min: 0, max: 45 },
+            moderate: { min: 45.1, max: 100 }
+          }}
           unit="µg/m³"
         />
       ),
     },
+
     {
-      label: "CO2",
+      label: "CO₂",
       value: "co2",
       content: (
         <ViewCharts
-          title="CO2"
+          title="CO₂"
           data={data}
           dataKey={colorConfig[5].dataKey}
           lastWeekValue={monitoringData?.oneWeekAgo?.average?.[colorConfig[5].dataKey] || 0}
           yesterdayValue={monitoringData?.oneDayAgo?.average?.[colorConfig[5].dataKey] || 0}
-          thresholds={[400, 1000, 2000]}
-          categories={["Buena", "Moderada", "Pobre", "Peligrosa"]}
-          unit="°C"
+          ranges={{
+            good: { min: 400, max: 700 },
+            moderate: { min: 701, max: 1000 }
+          }}
+          unit="ppm"
         />
       ),
     },
+
     {
       label: "CO",
       value: "co",
@@ -122,24 +121,29 @@ export function TabsView() {
           dataKey={colorConfig[6].dataKey}
           lastWeekValue={monitoringData?.oneWeekAgo?.average?.[colorConfig[6].dataKey] || 0}
           yesterdayValue={monitoringData?.oneDayAgo?.average?.[colorConfig[6].dataKey] || 0}
-          thresholds={[400, 1000, 2000]}
-          categories={["Buena", "Moderada", "Pobre", "Peligrosa"]}
+          ranges={{
+            good: { min: 0, max: 3.5 },
+            moderate: { min: 3.6, max: 9 }
+          }}
           unit="ppm"
         />
       ),
     },
+
     {
       label: "TVOC",
       value: "tvoc",
       content: (
         <ViewCharts
-          title="Tvoc"
+          title="TVOC"
           data={data}
           dataKey={colorConfig[7].dataKey}
           lastWeekValue={monitoringData?.oneWeekAgo?.average?.[colorConfig[7].dataKey] || 0}
           yesterdayValue={monitoringData?.oneDayAgo?.average?.[colorConfig[7].dataKey] || 0}
-          thresholds={[400, 1000, 2000]}
-          categories={["Buena", "Moderada", "Pobre", "Peligrosa"]}
+          ranges={{
+            good: { min: 0, max: 200 },
+            moderate: { min: 201, max: 500 }
+          }}
           unit="ppb"
         />
       ),

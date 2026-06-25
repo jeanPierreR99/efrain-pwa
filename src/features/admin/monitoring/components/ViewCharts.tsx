@@ -10,12 +10,11 @@ interface ViewChartsProps {
     dataKey: any;
     lastWeekValue: any;
     yesterdayValue: any;
-    thresholds: number[];
-    categories: string[];
+    ranges: { good: { min: number, max: number }, moderate: { min: number, max: number } };
     unit: string;
 }
 
-const ViewCharts: React.FC<ViewChartsProps> = ({ title, data, dataKey, lastWeekValue, yesterdayValue, thresholds, categories, unit }) => {
+const ViewCharts: React.FC<ViewChartsProps> = ({ title, data, dataKey, lastWeekValue, yesterdayValue, ranges, unit }) => {
     return (
         <Card className='border-none bg-white shadow-none px-4'>
             <CardHeader className='px-0'>
@@ -23,15 +22,15 @@ const ViewCharts: React.FC<ViewChartsProps> = ({ title, data, dataKey, lastWeekV
                 <div className='flex md:flex-row flex-col justify-between gap-4'>
                     <div className='flex flex-col gap-2 md:w-fit'>
                         <span className='text-gray-500s text-center font-bold text-sm'>Hoy</span>
-                        <CardQuality dataKey={dataKey} thresholds={thresholds} categories={categories} unit={unit}></CardQuality>
+                        <CardQuality dataKey={dataKey} ranges={ranges} unit={unit}></CardQuality>
                     </div>
                     <div className='flex flex-col gap-2 md:w-fit'>
                         <span className='text-gray-500s text-center font-bold text-sm'>Ayer</span>
-                        <CardQualityPast data={yesterdayValue.toFixed(2)} thresholds={thresholds} categories={categories} unit={unit}></CardQualityPast>
+                        <CardQualityPast data={yesterdayValue.toFixed(2)} ranges={ranges} unit={unit}></CardQualityPast>
                     </div>
                     <div className='flex flex-col gap-2 md:w-fit'>
                         <span className='text-gray-500s text-center font-bold text-sm'>Semana pasada</span>
-                        <CardQualityPast data={lastWeekValue.toFixed(2)} thresholds={thresholds} categories={categories} unit={unit}></CardQualityPast>
+                        <CardQualityPast data={lastWeekValue.toFixed(2)} ranges={ranges} unit={unit}></CardQualityPast>
                     </div>
                 </div>
             </CardHeader>

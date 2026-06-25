@@ -19,6 +19,7 @@ const StatsOverview = () => {
     { key: "temperature", stroke: "#f43f5e", fill: "#f43f5e", name: "Temperatura" }, // Rojo
     { key: "humidity", stroke: "#3b82f6", fill: "#3b82f6", name: "Humedad" }, // Azul
     { key: "pm2_5", stroke: "#10b981", fill: "#10b981", name: "PM2.5" }, // Verde
+    { key: "pm10", stroke: "#1c9fb6", fill: "#1c9fb6", name: "PM10" }, // Verde
     { key: "co2", stroke: "#8b5cf6", fill: "#8b5cf6", name: "CO2" }, // Violeta
     { key: "co", stroke: "#f59e0b", fill: "#f59e0b", name: "CO" }, // Ámbar
     { key: "tvoc", stroke: "#ef4444", fill: "#ef4444", name: "TVOC" }, // Rojo intenso

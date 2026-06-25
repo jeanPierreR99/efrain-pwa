@@ -122,13 +122,13 @@ const Compare = () => {
             dateSecond={dateSecondAux}
             sensor="humidity"
           />
-          <ChartViewCompare
+          {/* <ChartViewCompare
             title="PM2"
             chartData={data}
             dateFirst={dateFirstAux}
             dateSecond={dateSecondAux}
             sensor="pm2"
-          />
+          /> */}
           <ChartViewCompare
             title="PM2.5"
             chartData={data}

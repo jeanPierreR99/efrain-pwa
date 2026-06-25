@@ -85,6 +85,10 @@ export const routesLogin: RouteObject[] = [
                 element: withSuspense(<Monitoring />),
             },
             {
+                path: "compare",
+                element: withSuspense(<Compare />),
+            },
+            {
                 path: "*",
                 element: withSuspense(<Home />)
             }

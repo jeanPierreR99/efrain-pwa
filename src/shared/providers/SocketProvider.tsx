@@ -71,7 +71,6 @@ export const SocketProvider = ({ children }: SocketProviderProps) => {
 
     // Handler de datos
     const onNewMeasurement = (data: any) => {
-      console.log('📊 Nueva medición recibida:', data);
 
       try {
         const transformedData = {
@@ -87,7 +86,6 @@ export const SocketProvider = ({ children }: SocketProviderProps) => {
           hour: data.hour,
         };
 
-        console.log('✨ Datos transformados:', transformedData);
         addData(transformedData);
       } catch (error) {
         console.error('❌ Error al transformar datos:', error);

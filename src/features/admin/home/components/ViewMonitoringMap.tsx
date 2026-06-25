@@ -2,7 +2,7 @@ import { Chart } from "@/components/chart/Chart";
 import { RadialChartView } from "@/components/chart/RadialChartView";
 import { Card, CardDescription, CardTitle } from "@/shared/ui/card";
 import { useDataStore } from "@/store/UseDataStore";
-import { ArrowBigUpIcon, Frown, Meh, Skull, Smile } from "lucide-react";
+import { ArrowBigUpIcon, Meh, Skull, Smile } from "lucide-react";
 import React, { useEffect, useState } from "react";
 
 interface ViewMonitoringMapProps {
@@ -82,24 +82,65 @@ const ViewMonitoringMap: React.FC<ViewMonitoringMapProps> = ({ position }) => {
   const [evaluation, setEvaluation] = useState("s/e");
   console.log(position);
 
-  const getCategory = (value: number, thresholds: number[]) => {
-    if (value <= thresholds[0]) return 1; // Buena
-    if (value <= thresholds[1]) return 2; // Moderada
-    if (value <= thresholds[2]) return 3; // Pobre
-    return 4; // Peligrosa
+  type Category = 'Buena' | 'Moderada' | 'Peligrosa';
+
+  const getCategory = (
+    value: number,
+    ranges: {
+      good: { min: number; max: number };
+      moderate: { min: number; max: number };
+    }
+  ): Category => {
+
+    if (
+      value >= ranges.good.min &&
+      value <= ranges.good.max
+    ) {
+      return 'Buena';
+    }
+
+    if (
+      value >= ranges.moderate.min &&
+      value <= ranges.moderate.max
+    ) {
+      return 'Moderada';
+    }
+
+    return 'Peligrosa';
   };
 
-  const getAirQualityCategory = (pm2_5: number, pm10: number, co2: number) => {
-    const pm2_5Score = getCategory(pm2_5, [15, 35, 75]);
-    const pm10Score = getCategory(pm10, [45, 75, 150]);
-    const co2Score = getCategory(co2, [1000, 2000, 5000]);
+  const getAirQualityCategory = (values: {
+    pm25: number;
+    pm10: number;
+    co2: number;
+  }) => {
 
-    const worstScore = Math.max(pm2_5Score, pm10Score, co2Score);
+    const pm25Ranges = {
+      good: { min: 0, max: 15 },
+      moderate: { min: 15.1, max: 50 }
+    };
+    const pm10Ranges = {
+      good: { min: 0, max: 45 },
+      moderate: { min: 45.1, max: 100 }
+    };
+    const co2Ranges = {
+      good: { min: 400, max: 700 },
+      moderate: { min: 701, max: 1000 }
+    };
 
-    const categories = ["Buena", "Moderada", "Pobre", "Peligrosa"];
-    const finalDiagnosis = categories[worstScore - 1];
+    const qualities: Category[] = [
+      getCategory(values.pm25, pm25Ranges),
+      getCategory(values.pm10, pm10Ranges),
+      getCategory(values.co2, co2Ranges),
+    ];
 
-    return finalDiagnosis;
+    const worst = qualities.includes('Peligrosa')
+      ? 'Peligrosa'
+      : qualities.includes('Moderada')
+        ? 'Moderada'
+        : 'Buena';
+
+    return worst;
   };
 
   const getCardStyles = (evaluation: string) => {
@@ -117,13 +158,6 @@ const ViewMonitoringMap: React.FC<ViewMonitoringMapProps> = ({ position }) => {
           bgIcon: "bg-yellow-300",
           textColor: "text-yellow-500",
           icon: <Meh size={60} />,
-        };
-      case "Pobre":
-        return {
-          bgColor: "bg-orange-200",
-          bgIcon: "bg-orange-300",
-          textColor: "text-orange-500",
-          icon: <Frown size={60} />,
         };
       case "Peligrosa":
         return {
@@ -146,7 +180,11 @@ const ViewMonitoringMap: React.FC<ViewMonitoringMapProps> = ({ position }) => {
     const lastData = getLastData();
     if (lastData) {
       setEvaluation(
-        getAirQualityCategory(lastData.pm2_5, lastData.pm10, lastData.co2)
+        getAirQualityCategory({
+          pm25: lastData.pm2_5,
+          pm10: lastData.pm10,
+          co2: lastData.co2,
+        })
       );
     }
   }, [getLastData]);
@@ -157,13 +195,9 @@ const ViewMonitoringMap: React.FC<ViewMonitoringMapProps> = ({ position }) => {
     <div className="grid px-4 pb-4">
       <Card className=" border-none shadow-none py-2">
         <CardTitle>Calidad del aire</CardTitle>
-        <div className="text-xs text-red-400">
-          <li>Buena: Aire limpio y saludable.</li>
-          <li>Moderada: Aceptable, pero puede afectar a personas sensibles.</li>
-          <li>
-            Pobre: Mala, afecta a grupos sensibles y puede irritar ojos o
-            garganta.
-          </li>
+        <div className="text-xs text-red-400 px-4">
+          <li className="text-green-600">Buena: Aire limpio y saludable.</li>
+          <li className="text-orange-400">Moderada: Aceptable, pero puede afectar a personas sensibles.</li>
           <li>
             Peligrosa: Muy dañina, se debe evitar actividades al aire libre.
           </li>
@@ -179,7 +213,7 @@ const ViewMonitoringMap: React.FC<ViewMonitoringMapProps> = ({ position }) => {
             </div>
             <div className="flex flex-col col-span-2 p-4">
               <div className="flex gap-2 items-end justify-center">
-                <span className="text-5xl">{getLastData()?.co2}</span>
+                <span className="text-5xl"><span className="font-bold text-lg">CO2:</span> {getLastData()?.co2}</span>
                 <span className="text-lg">ppm</span>
               </div>
               <span className="bg-white p-1 text-lg text-center">
@@ -224,7 +258,7 @@ const ViewMonitoringMap: React.FC<ViewMonitoringMapProps> = ({ position }) => {
         ></RadialChartView>
       </div>
 
-      <div className="grid grid-cols-2 gap-2">
+      {/* <div className="grid grid-cols-2 gap-2">
         <Chart
           colorConfig={colorConfig[2]}
           chartData={getLastTenData()}
@@ -233,7 +267,7 @@ const ViewMonitoringMap: React.FC<ViewMonitoringMapProps> = ({ position }) => {
           colorConfig={colorConfig[2]}
           chartData={getLastData()}
         ></RadialChartView>
-      </div>
+      </div> */}
 
       <div className="grid grid-cols-2 gap-2">
         <Chart

@@ -32,11 +32,11 @@ export function TabsView({ compare, dataCompare }: Props) {
       value: "humidity",
       content: <ViewCharts title="Humedad" data={compare ? dataCompare : data} sensor={"humidity"} />,
     },
-    {
-      label: "PM2",
-      value: "pm2",
-      content: <ViewCharts title="PM2" data={compare ? dataCompare : data} sensor={"pm2"} />,
-    },
+    // {
+    //   label: "PM2",
+    //   value: "pm2",
+    //   content: <ViewCharts title="PM2" data={compare ? dataCompare : data} sensor={"pm2"} />,
+    // },
     {
       label: "PM2.5",
       value: "pm2.5",

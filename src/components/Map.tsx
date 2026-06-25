@@ -44,24 +44,60 @@ const Map: React.FC<MapProps> = ({ edit, title, description }) => {
         ) : null;
     };
 
-    // ✅ FUNCIÓN CORREGIDA para obtener PM2.5
     const getPM25Value = () => {
         const lastData = getLastData();
-        return lastData?.pm2_5 || lastData?.pm2_5 || 0; // p25 del transmisor LoRa
+        return lastData?.pm2_5 || 0;
     };
 
-    // Función para calcular calidad PM2.5
-    const getAirQuality = (pm25: number) => {
-        if (pm25 <= 12) {
-            return { quality: 'Bueno', color: '#4CAF50' }; // Verde
-        } else if (pm25 > 12 && pm25 <= 35) {
-            return { quality: 'Moderado', color: '#FF9800' }; // Naranja claro
-        } else if (pm25 > 35 && pm25 <= 55) {
-            return { quality: 'Malsana (Sensible)', color: '#FF5722' }; // Naranja oscuro
-        } else {
-            return { quality: 'Malsana', color: '#F44336' }; // Rojo
+    type Category = 'Buena' | 'Moderada' | 'Peligrosa';
+
+    const getCategory = (
+        value: number,
+        ranges: {
+            good: { min: number; max: number };
+            moderate: { min: number; max: number };
         }
+    ): Category => {
+
+        if (
+            value >= ranges.good.min &&
+            value <= ranges.good.max
+        ) {
+            return 'Buena';
+        }
+
+        if (
+            value >= ranges.moderate.min &&
+            value <= ranges.moderate.max
+        ) {
+            return 'Moderada';
+        }
+
+        return 'Peligrosa';
     };
+
+    const getAirQualityCategory = (values: {
+        pm25: number;
+    }) => {
+
+        const pm25Ranges = {
+            good: { min: 0, max: 15 },
+            moderate: { min: 15.1, max: 50 }
+        };
+
+        const qualities: Category[] = [
+            getCategory(values.pm25, pm25Ranges),
+        ];
+
+        const worst = qualities.includes('Peligrosa')
+            ? 'Peligrosa'
+            : qualities.includes('Moderada')
+                ? 'Moderada'
+                : 'Buena';
+
+        return worst;
+    };
+
 
     return (
         <div className="relative">
@@ -89,15 +125,21 @@ const Map: React.FC<MapProps> = ({ edit, title, description }) => {
 
                 {markers.map((marker, index) => {
                     const pm25 = getPM25Value(); // ✅ OBTIENE EL VALOR CORRECTO
-                    const airQuality = getAirQuality(pm25);
+                    const airQuality = getAirQualityCategory({ pm25 });
+                    const color =
+                        airQuality === "Buena"
+                            ? "#4CAF50"
+                            : airQuality === "Moderada"
+                                ? "#FF9800"
+                                : "#FF5722";
 
                     return (
                         <CircleMarker
-                            key={index}
+                            key={`${index}-${pm25}`} // 🔥 FORZAR RECREACIÓN
                             center={marker.position as any}
                             radius={20}
-                            color={airQuality.color}
-                            fillColor={airQuality.color}
+                            color={color}
+                            fillColor={color}
                             fillOpacity={0.7}
                             weight={2}
                             eventHandlers={{ click: () => (!edit ? setOpen(true) : setOpen(false)) }}
@@ -112,14 +154,14 @@ const Map: React.FC<MapProps> = ({ edit, title, description }) => {
                                     <div className="text-gray-500 float-right">{marker.create_at}</div>
                                     <div className="mt-3 p-3 bg-gradient-to-r from-gray-50 to-gray-100 rounded-lg">
                                         <div className="flex items-center mb-2">
-                                            <div className="w-4 h-4 rounded-full mr-2" style={{ backgroundColor: airQuality.color }}></div>
+                                            <div className="w-4 h-4 rounded-full mr-2" style={{ backgroundColor: `${airQuality === 'Buena' ? '#4CAF50' : airQuality === 'Moderada' ? '#FF9800' : '#FF5722'}` }}></div>
                                             <span className="font-semibold text-lg">PM2.5</span>
                                         </div>
                                         <div className="text-2xl font-bold text-gray-800 mb-1">
                                             {pm25.toFixed(1)} µg/m³
                                         </div>
                                         <div className="text-sm font-medium text-gray-600">
-                                            {airQuality.quality}
+                                            {airQuality}
                                         </div>
                                     </div>
                                 </div>

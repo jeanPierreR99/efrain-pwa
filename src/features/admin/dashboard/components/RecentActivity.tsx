@@ -34,7 +34,16 @@ const RecentActivity = () => {
                                             <span className="font-semibold">PM2.5:</span> {item.pm2_5} µg/m³
                                         </div>
                                         <div>
+                                            <span className="font-semibold">PM10:</span> {item.pm10} µg/m³
+                                        </div>
+                                        <div>
+                                            <span className="font-semibold">CO:</span> {item.co} ppm
+                                        </div>
+                                        <div>
                                             <span className="font-semibold">CO2:</span> {item.co2} ppm
+                                        </div>
+                                        <div>
+                                            <span className="font-semibold">TVOC:</span> {item.tvoc} ppm
                                         </div>
                                     </div>
                                 </div>
