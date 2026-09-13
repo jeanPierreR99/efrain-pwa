@@ -1,4 +1,4 @@
-import { Download, X } from "lucide-react";
+import { Download, X, Smartphone, Zap } from "lucide-react";
 import { useEffect, useState } from "react";
 
 interface BeforeInstallPromptEvent extends Event {
@@ -79,107 +79,95 @@ const InstallPWAButton = () => {
 
     return (
         <div
-            className={`
-                fixed
-                bottom-6
-                left-1/2
-                z-[9999]
-                flex
-                min-w-50
-                -translate-x-1/2
-                flex-col
-                items-center
-                gap-2
-                rounded-bl-4xl
-                rounded-tr-4xl
-                border-2
-                border-[#00C9A3]
-                bg-white
-                px-5
-                pb-3
-                text-muted-foreground
-                shadow-2xl
-                backdrop-blur-md
-                transition-all
-                duration-1000
-                hover:scale-95
-                ${showButton
+            className={`fixed bottom-5 left-1/2 z-[9999] w-[calc(100%-2rem)] max-w-sm -translate-x-1/2 transition-all duration-500 sm:bottom-6 ${showButton
                     ? "translate-y-0 opacity-100"
-                    : "translate-y-10 opacity-0 pointer-events-none"
-                }
-            `}
+                    : "pointer-events-none translate-y-8 opacity-0"
+                }`}
         >
-            <button
-                onClick={handleClose}
-                className="
-                    absolute
-                    right-3
-                    top-3
-                    z-10
-                    rounded-full
-                    p-1.5
-                    text-gray-400
-                    transition
-                    hover:bg-gray-100
-                    hover:text-gray-700
-                "
-            >
-                <X size={16} />
-            </button>
+            <div className="relative overflow-hidden rounded-3xl border border-emerald-100 bg-white shadow-[0_20px_50px_-15px_rgba(0,0,0,0.25)]">
+                <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-emerald-400 via-[#00C9A3] to-teal-400" />
 
-            <img
-                className="h-30 w-40 object-contain p-2"
-                src="./icon.png"
-                alt=""
-            />
-
-            {/* Text */}
-            <div className="relative text-center">
-
-                <p
-                    className="
-                mt-1
-                text-xs
-                leading-5
-                text-gray-500
-            "
+                <button
+                    onClick={handleClose}
+                    aria-label="Cerrar"
+                    className="absolute right-3 top-3 z-20 flex h-8 w-8 items-center justify-center rounded-full bg-gray-100/80 text-gray-400 transition-all hover:bg-gray-200 hover:text-gray-700 active:scale-95"
                 >
-                    Accede más rápido desde tu
-                    escritorio o menú inicio.
-                </p>
+                    <X size={16} />
+                </button>
+
+                <div className="px-5 pb-5 pt-6">
+                    <div className="flex items-center gap-4">
+                        <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-emerald-100 bg-emerald-50 shadow-sm">
+                            <img
+                                src="./icon.png"
+                                alt="Icono de la aplicación"
+                                className="h-full w-full object-contain p-2"
+                            />
+                        </div>
+
+                        <div className="min-w-0 pr-8">
+                            <div className="mb-1 flex items-center gap-1.5">
+                                <Zap
+                                    size={13}
+                                    className="fill-emerald-500 text-emerald-500"
+                                />
+
+                                <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600">
+                                    Acceso rápido
+                                </span>
+                            </div>
+
+                            <h3 className="text-base font-bold text-gray-900">
+                                Instala la aplicación
+                            </h3>
+
+                            <p className="mt-1 text-xs leading-5 text-gray-500">
+                                Accede rápidamente desde tu escritorio, nóvil o
+                                menú de inicio.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div className="mt-5 grid grid-cols-2 gap-2">
+                        <div className="flex items-center gap-2 rounded-xl bg-gray-50 px-3 py-2.5">
+                            <Smartphone
+                                size={15}
+                                className="shrink-0 text-gray-400"
+                            />
+
+                            <span className="text-[10px] font-medium text-gray-500">
+                                Acceso directo
+                            </span>
+                        </div>
+
+                        <div className="flex items-center gap-2 rounded-xl bg-gray-50 px-3 py-2.5">
+                            <Zap
+                                size={15}
+                                className="shrink-0 text-gray-400"
+                            />
+
+                            <span className="text-[10px] font-medium text-gray-500">
+                                Inicio rápido
+                            </span>
+                        </div>
+                    </div>
+
+                    <button
+                        onClick={handleInstall}
+                        className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#00B894] to-[#00C9A3] px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-500/20 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-emerald-500/25 active:translate-y-0 active:scale-[0.98]"
+                    >
+                        <Download size={17} />
+                        <span>Instalar ahora</span>
+                    </button>
+
+                    <button
+                        onClick={handleClose}
+                        className="mt-2 w-full py-1 text-xs font-medium text-gray-400 transition-colors hover:text-gray-600"
+                    >
+                        Ahora no
+                    </button>
+                </div>
             </div>
-
-            {/* Install button */}
-            <button
-                onClick={handleInstall}
-                className="
-            relative
-            flex
-            w-full
-            items-center
-            justify-center
-            gap-2
-            rounded-2xl
-            bg-gradient-to-r
-            from-[#00C9A3]/30
-            to-[#00C9A3]
-            px-4
-            py-3
-            text-sm
-            font-semibold
-            text-white
-            shadow-lg
-            transition-all
-            duration-300
-            hover:-translate-y-[1px]
-            hover:shadow-xl
-            active:scale-[0.98]
-        "
-            >
-                <Download size={18} />
-
-                <span>Instalar ahora</span>
-            </button>
         </div>
     );
 };

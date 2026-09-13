@@ -1,4 +1,4 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/shared/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/shared/ui/card';
 import { ChartNew } from './ChartNew';
 import React from 'react';
 import CardQuality from './CardQuality';
@@ -35,7 +35,6 @@ const ViewCharts: React.FC<ViewChartsProps> = ({ title, data, dataKey, lastWeekV
                 </div>
             </CardHeader>
             <CardContent className='p-0'>
-                <CardDescription className='mb-4'>Ultimas 5 horas</CardDescription>
                 <ChartNew data={data} sensor={dataKey}></ChartNew>
             </CardContent>
         </Card>

@@ -52,7 +52,22 @@ const FormDateExport: React.FC<PropFormDateExport> = ({ date, setDate }) => {
                         mode="range"
                         defaultMonth={date?.from}
                         selected={date}
-                        onSelect={setDate}
+                        onSelect={(range) => {
+                            if (!range) {
+                                setDate({});
+                                return;
+                            }
+
+                            if (range.from && !range.to) {
+                                setDate({
+                                    from: range.from,
+                                    to: range.from,
+                                });
+                                return;
+                            }
+
+                            setDate(range);
+                        }}
                         numberOfMonths={2}
                     />
                 </PopoverContent>

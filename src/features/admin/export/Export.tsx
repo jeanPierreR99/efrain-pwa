@@ -107,7 +107,7 @@ const Export = () => {
                 <div className='flex flex-col md:flex-row gap-4 mt-4'>
                     <FormDateExport date={date} setDate={setDate} />
                     <Button className='w-fit' onClick={handleClick} disabled={load}>{load && <Loader2 className='animate-spin' />}Buscar</Button>
-                    {date.from && date.to && <Button
+                    {(date.from && date.to) && <Button
                         className="w-fit"
                         onClick={handleExport}
                         disabled={exportLoading}
