@@ -12,6 +12,7 @@ type BackendUser = {
 type ApiListResponse = { success: boolean; data: BackendUser[] };
 type ApiItemResponse = { success: boolean; data: BackendUser };
 type ApiDeleteResponse = { success: boolean; data: { deleted: boolean } };
+type ApiStatusResponse = { success: boolean; data: { active: boolean; role?: string } };
 // type ApiLoginResponse = { success: boolean; data?: { token?: string; user?: BackendUser }; message?: string };
 type ApiLoginResponse = { success: boolean;  user?: BackendUser ; message?: string };
 
@@ -61,6 +62,11 @@ export const userService = {
   async remove(id: string) {
     const res = await apiClient.delete<ApiDeleteResponse>(`/users/${id}`);
     return res.data?.deleted ?? true;
+  },
+
+  async checkStatus(id: string) {
+    const res = await apiClient.get<ApiStatusResponse>(`/users/${id}/status`);
+    return res.data;
   },
 
   async login(email: string, password: string) {

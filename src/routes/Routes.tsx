@@ -21,8 +21,11 @@ const withSuspense = (Component: React.ReactNode) => (
 const RequireAdmin = () => {
     const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
     const userRole = localStorage.getItem('userRole');
-    return isAuthenticated && userRole === 'admin' ? <AdminLayout /> : <Navigate to="/login" replace />;
+    return isAuthenticated && (userRole === 'admin' || userRole === 'colaborador') ? <AdminLayout /> : <Navigate to="/login" replace />;
 };
+
+const RequireAdminOnly = ({ children }: { children: React.ReactNode }) =>
+    localStorage.getItem('userRole') === 'admin' ? <>{children}</> : <Navigate to="/" replace />;
 
 export const routes: RouteObject[] = [
     {
@@ -56,7 +59,7 @@ export const routes: RouteObject[] = [
             },
             {
                 path: "users",
-                element: withSuspense(<Users />),
+                element: <RequireAdminOnly>{withSuspense(<Users />)}</RequireAdminOnly>,
             },
             {
                 path: "*",

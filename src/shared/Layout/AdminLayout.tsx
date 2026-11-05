@@ -4,6 +4,9 @@ import AdminSidebar from "./AdminSidebar";
 import { useDataStoreMonitoring } from "@/store/UseDataStoreMonitoring";
 import { useEffect } from "react";
 import { monitoringService } from "@/services/monitoringService";
+import { userService } from "@/services/userService";
+import { logout } from "@/services/session";
+import { toast } from "sonner";
 
 const AdminLayout = () => {
     const { setLoading, setMonitoringData, isLoading } = useDataStoreMonitoring();
@@ -18,6 +21,28 @@ const AdminLayout = () => {
             console.log(error)
         }
     };
+
+    useEffect(() => {
+        const userId = localStorage.getItem('userId');
+        if (!userId) {
+            logout();
+            return;
+        }
+        userService.checkStatus(userId)
+            .then(({ active, role }) => {
+                if (!active) {
+                    toast.error('Tu cuenta fue desactivada');
+                    setTimeout(logout, 1500);
+                    return;
+                }
+                const mapped = role === 'administrador' ? 'admin' : role;
+                if (mapped && mapped !== localStorage.getItem('userRole')) {
+                    localStorage.setItem('userRole', mapped);
+                    window.location.reload();
+                }
+            })
+            .catch(() => { /* error de red/servidor: no cerrar sesión */ });
+    }, []);
 
     useEffect(() => {
         fetchMonitoringData('2025-09-23');

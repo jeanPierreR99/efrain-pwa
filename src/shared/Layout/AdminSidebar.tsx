@@ -3,11 +3,14 @@ import { NavLink, useLocation } from "react-router-dom";
 import { BarChart3, Home, MapPin, Users, LayoutDashboard, FileDown, LogOut, Menu, X } from "lucide-react";
 import LOGO from "../../assets/images/logo.webp";
 import { Button } from "@/shared/ui/button";
+import { logout } from "@/services/session";
 
 const AdminSidebar = () => {
     const location = useLocation();
     const [isOpen, setIsOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+    const isAdmin = localStorage.getItem('userRole') === 'admin';
 
     const navItems = [
         { icon: <LayoutDashboard size={20} />, label: "Dashboard", path: "/" },
@@ -16,7 +19,7 @@ const AdminSidebar = () => {
         { icon: <BarChart3 size={20} />, label: "Monitoreo", path: "/monitoring" },
         { icon: <FileDown size={20} />, label: "Comparaciones", path: "/compare" },
         { icon: <FileDown size={20} />, label: "Exportar", path: "/export" },
-        { icon: <Users size={20} />, label: "Usuarios", path: "/users" },
+        ...(isAdmin ? [{ icon: <Users size={20} />, label: "Usuarios", path: "/users" }] : []),
     ];
 
     useEffect(() => {
@@ -39,9 +42,7 @@ const AdminSidebar = () => {
     }, [location.pathname, isMobile]);
 
     const handleLogout = () => {
-        localStorage.removeItem('isAuthenticated');
-        localStorage.removeItem('userRole');
-        window.location.replace('/login');
+        logout();
     };
 
     const toggleSidebar = () => {

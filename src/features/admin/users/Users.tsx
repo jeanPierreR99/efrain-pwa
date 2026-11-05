@@ -8,6 +8,11 @@ import UserForm from "./components/UserForm";
 import { userService } from "@/services/userService";
 import { toast } from "sonner";
 
+const roleToLabel = (role: string) =>
+    role === 'administrador' ? 'Administrador' : role === 'colaborador' ? 'Colaborador' : role;
+const roleToApi = (role: string) =>
+    role === 'Administrador' ? 'administrador' : role === 'Colaborador' ? 'colaborador' : role;
+
 const Users = () => {
     const [users, setUsers] = useState<User[]>([]);
     const [open, setOpen] = useState(false);
@@ -23,7 +28,7 @@ const Users = () => {
                     id: u.id,
                     name: u.fullName,
                     email: u.email,
-                    role: u.role === 'administrador' ? 'Administrador' : u.role,
+                    role: roleToLabel(u.role),
                     status: u.isActive ? 'Activo' : 'Inactivo',
                 }));
                 setUsers(mapped);
@@ -64,7 +69,7 @@ const Users = () => {
                 const payload: any = {
                     fullName: data.name,
                     email: data.email,
-                    role: data.role === 'Administrador' ? 'administrador' : data.role,
+                    role: roleToApi(data.role),
                     isActive: data.status === 'Activo',
                 };
                 if (data.password && data.password.length >= 6) {
@@ -75,7 +80,7 @@ const Users = () => {
                     id: updated.id,
                     name: updated.fullName,
                     email: updated.email,
-                    role: updated.role === 'administrador' ? 'Administrador' : updated.role,
+                    role: roleToLabel(updated.role),
                     status: updated.isActive ? 'Activo' : 'Inactivo',
                 } : u));
                 toast.success('Usuario actualizado');
@@ -84,14 +89,14 @@ const Users = () => {
                     fullName: data.name,
                     email: data.email,
                     password: data.password || '',
-                    role: data.role === 'Administrador' ? 'administrador' : data.role,
+                    role: roleToApi(data.role),
                     isActive: data.status === 'Activo',
                 });
                 setUsers(prev => [...prev, {
                     id: created.id,
                     name: created.fullName,
                     email: created.email,
-                    role: created.role === 'administrador' ? 'Administrador' : created.role,
+                    role: roleToLabel(created.role),
                     status: created.isActive ? 'Activo' : 'Inactivo',
                 }]);
                 toast.success('Usuario creado');

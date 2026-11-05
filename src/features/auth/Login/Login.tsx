@@ -47,6 +47,7 @@ const Login = () => {
         const mappedRole = role === "administrador" ? "admin" : role;
 
         localStorage.setItem("userRole", mappedRole);
+        localStorage.setItem("userId", res.user?.id || res.user?._id || "");
         localStorage.setItem("isAuthenticated", "true");
 
         toast.success("¡Inicio de sesión exitoso!", {
@@ -55,8 +56,8 @@ const Login = () => {
         });
 
         setTimeout(() => {
-          if (mappedRole === "admin") {
-            window.location.assign("/admin");
+          if (mappedRole === "admin" || mappedRole === "colaborador") {
+            window.location.assign("/");
           } else {
             window.location.assign("/map");
           }

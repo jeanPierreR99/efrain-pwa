@@ -106,6 +106,7 @@ const UserForm: React.FC<UserFormProps> = ({ defaultValues, onSubmit, onCancel, 
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="Administrador">Administrador</SelectItem>
+                    <SelectItem value="Colaborador">Colaborador</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormMessage />
