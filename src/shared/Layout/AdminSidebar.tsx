@@ -13,7 +13,7 @@ const AdminSidebar = () => {
     const isAdmin = localStorage.getItem('userRole') === 'admin';
 
     const navItems = [
-        { icon: <LayoutDashboard size={20} />, label: "Dashboard", path: "/" },
+        ...(isAdmin ? [{ icon: <LayoutDashboard size={20} />, label: "Dashboard", path: "/" }] : []),
         { icon: <Home size={20} />, label: "Mapa", path: "/map" },
         ...(isAdmin ? [
             { icon: <MapPin size={20} />, label: "Nuevo Punto", path: "/new-point" },

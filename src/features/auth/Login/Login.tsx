@@ -56,7 +56,7 @@ const Login = () => {
         });
 
         setTimeout(() => {
-          if (mappedRole === "admin" || mappedRole === "colaborador") {
+          if (mappedRole === "admin") {
             window.location.assign("/");
           } else {
             window.location.assign("/map");

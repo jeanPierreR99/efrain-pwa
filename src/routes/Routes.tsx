@@ -25,7 +25,10 @@ const RequireAdmin = () => {
 };
 
 const RequireAdminOnly = ({ children }: { children: React.ReactNode }) =>
-    localStorage.getItem('userRole') === 'admin' ? <>{children}</> : <Navigate to="/" replace />;
+    localStorage.getItem('userRole') === 'admin' ? <>{children}</> : <Navigate to="/map" replace />;
+
+const DashboardIndex = () =>
+    localStorage.getItem('userRole') === 'admin' ? <Dashboard /> : <Navigate to="/map" replace />;
 
 export const routes: RouteObject[] = [
     {
@@ -35,7 +38,7 @@ export const routes: RouteObject[] = [
         children: [
             {
                 index: true,
-                element: withSuspense(<Dashboard />),
+                element: withSuspense(<DashboardIndex />),
             },
             {
                 path: "map",
