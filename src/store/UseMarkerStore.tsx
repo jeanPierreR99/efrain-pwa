@@ -16,22 +16,16 @@ interface MarkerStore {
 export const useMarkerStore = create<MarkerStore>((set) => ({
     markers: [
         {
-            position: [-12.589805, -69.173021],
-            title: "Manama",
-            description: "Descripcion de Manama",
-            create_at: "2021-10-10"
+            position: [-12.574419, -69.174329],
+            title: "Las piedras",
+            description: "Descripcion de Las piedras",
+            create_at: "2026-10-10"
         },
         {
             position: [-12.571653760254948, -69.16408538818361],
             title: "El triunfo",
             description: "Descripcion de triunfo",
-            create_at: "2021-10-10"
-        },
-        {
-            position: [-12.628612981187759, -69.21455383300783],
-            title: "Diamante",
-            description: "Descripcion de Diamante",
-            create_at: "2021-10-10"
+            create_at: "2026-10-10"
         },
     ],
     addMarker: (marker) => set((state) => ({ markers: [...state.markers, marker] })),

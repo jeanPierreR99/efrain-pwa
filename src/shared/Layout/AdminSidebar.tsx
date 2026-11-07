@@ -15,11 +15,13 @@ const AdminSidebar = () => {
     const navItems = [
         { icon: <LayoutDashboard size={20} />, label: "Dashboard", path: "/" },
         { icon: <Home size={20} />, label: "Mapa", path: "/map" },
-        { icon: <MapPin size={20} />, label: "Nuevo Punto", path: "/new-point" },
         { icon: <BarChart3 size={20} />, label: "Monitoreo", path: "/monitoring" },
         { icon: <FileDown size={20} />, label: "Comparaciones", path: "/compare" },
         { icon: <FileDown size={20} />, label: "Exportar", path: "/export" },
-        ...(isAdmin ? [{ icon: <Users size={20} />, label: "Usuarios", path: "/users" }] : []),
+        ...(isAdmin ? [
+            { icon: <Users size={20} />, label: "Usuarios", path: "/users" },
+            { icon: <MapPin size={20} />, label: "Nuevo Punto", path: "/new-point" }
+        ] : []),
     ];
 
     useEffect(() => {

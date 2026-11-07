@@ -43,7 +43,7 @@ export const routes: RouteObject[] = [
             },
             {
                 path: "new-point",
-                element: withSuspense(<NewPoint />),
+                element: <RequireAdminOnly>{withSuspense(<NewPoint />)}</RequireAdminOnly>,
             },
             {
                 path: "monitoring",
