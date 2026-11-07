@@ -16,7 +16,7 @@ const AdminSidebar = () => {
         { icon: <LayoutDashboard size={20} />, label: "Dashboard", path: "/" },
         { icon: <Home size={20} />, label: "Mapa", path: "/map" },
         ...(isAdmin ? [
-            { icon: <MapPin size={20} />, label: "Nuevo Punto", path: "/new-point" }
+            { icon: <MapPin size={20} />, label: "Nuevo Punto", path: "/new-point" },
             { icon: <Users size={20} />, label: "Usuarios", path: "/users" },
         ] : []),
         { icon: <BarChart3 size={20} />, label: "Monitoreo", path: "/monitoring" },
